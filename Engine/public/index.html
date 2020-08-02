@@ -8,29 +8,6 @@
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>Simple Game Engine</title>
     <link rel="icon" type="image/x-icon" href="./favicon.png">
-
-    <!--
-        this is the vertex shader attribute vec3 aSquareVertexPosition;
-        Vertex shader expects one vertex position
-        naming convention, attributes always begin with "a" void main(void) {
-            // Convert the vec3 into vec4 for scan conversion and
-            assign to gl_Position to pass the vertex to the fragment shader
-                gl_Position = vec4(aSquareVertexPosition, 1.0); } // End of vertex shader
-    -->
-    <script type="x-shader/x-vertex" id="VertexShader">
-        attribute vec3 aSquareVertexPosition; void main(void) { gl_Position = vec4(aSquareVertexPosition, 1.0); }
-    </script>
-
-    <!--
-        this is the fragment (or pixel) shader
-            void main(void) {
-                for every pixel called (within the square) sets
-                constant color white with alpha-channel value of 1.0
-                    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0); } // End of fragment/pixel shader
-     -->
-    <script type="x-shader/x-fragment" id="FragmentShader">
-        void main(void) { gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0); }
-    </script>
 </head>
 
 <body>

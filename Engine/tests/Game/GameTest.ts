@@ -1,30 +1,26 @@
-/*
- * File: MyGame.js
- * This is the logic of our game. For now, this is very simple.
- */
-/*jslint node: true, vars: true */
-/*global gEngine: false, SimpleShader: false */
-/* find out more about jslint: http://www.jslint.com/help.html */
-
-"use strict"; // Operate in Strict mode such that variables must be declared before used!
-
 export default class GameTest {
+    private shader: any = null;
+
     constructor(engine: any) {
         this.init(engine);
     }
 
     init(engine: any) {
         // Step A: Initialize the webGL Context and the VertexBuffer
+        // Initialized by the Game Engine
 
         // Step B: Create, load and compile the shaders
-        // this.mShader = new SimpleShader("VertexShader", "FragmentShader");
+        this.shader = engine.getShader();
+        this.shader.addShader(
+            "../src/Core/GLSLShaders/SimpleVS.glsl", // Path to the VertexShader
+            "../src/Core/GLSLShaders/SimpleFS.glsl"   // Path to the FragmentShader
+        );
 
         // Step C: Draw!
         // Step C1: Clear the canvas
         engine.clearCanvas([0, 0.8, 0, 1]);
-
         // Step C2: Activate the proper shader
-        engine.getShader().activateShader();
+        this.shader.activateShader([0, 0, 1, 1]); // Pixel Color parameter
 
         // Step C3: Draw with the currently activated geometry and the activated shader
         var gl = engine.getGL();
