@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <title>Simple Game Engine</title>
+
+    <link rel="icon" type="image/x-icon" href="./favicon.png">
+
+    <!-- everything in-between the <script> tag is javascript -->
+    <script type="x-shader/x-vertex" id="VertexShader">
+        // this is the vertex shader attribute vec3 aSquareVertexPosition; // Vertex shader expects one vertex position // naming convention, attributes always begin with "a" void main(void) { // Convert the vec3 into vec4 for scan conversion and // assign to
+        gl_Position to pass the vertex to the fragment shader gl_Position = vec4(aSquareVertexPosition, 1.0); } // End of vertex shader
+    </script>
+
+    <script type="x-shader/x-fragment" id="FragmentShader">
+        // this is the fragment (or pixel) shader void main(void) { // for every pixel called (within the square) sets // constant color white with alpha-channel value of 1.0 gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0); } // End of fragment/pixel shader
+    </script>
+
+    <!-- the following says there are javascript source code contained in
+             the external source files
+        -->
+    <!-- <script type="text/javascript" src="../src/VertexBuffer.js"></script>
+    <script type="text/javascript" src="../src/WebGL.js"></script>
+    <script type="text/javascript" src="../src/Core/Engine.js"></script> -->
+    <!-- <script type="text/javascript" src="../tests/Game/GameTest.js"></script> -->
+</head>
+
+<body>
+    <h1>Hello World!</h1>
+    We are using Node.js <span id="node-version"></span>, Chromium <span id="chrome-version"></span>, and Electron <span id="electron-version"></span>.
+
+    <!-- GLCanvas is the area we will draw in: a 640x480 area. -->
+    <canvas id="GLCanvas" width="640" height="480">
+        <!-- this message will show only if WebGL clearing failed -->
+        Your browser does not support the HTML5 canvas.
+    </canvas>
+
+    <!-- You can also require other files to run in this process -->
+    <script src="../electron/renderer.js"></script>
+</body>
+
+</html>
