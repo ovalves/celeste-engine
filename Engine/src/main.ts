@@ -1,7 +1,6 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
-const path = require('path')
-
+import { app, BrowserWindow } from 'electron'
+import * as path from 'path'
 
 
 // Create node JS browser console
@@ -9,22 +8,18 @@ const nodeConsole = require('console');
 var myConsole = new nodeConsole.Console(process.stdout, process.stderr);
 myConsole.log('Hello Console!');
 
-
-
 function createWindow() {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, './electron/preload.js')
+            preload: path.join(__dirname, '../electron/preload.js')
         }
     })
 
     // and load the index.html of the app.
-    mainWindow.loadFile('./public/index.html')
-
-
+    mainWindow.loadFile(path.join(__dirname, '../../public/index.html'))
 
     // Open the DevTools.
     mainWindow.webContents.openDevTools()

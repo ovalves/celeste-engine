@@ -8,15 +8,12 @@
 
 "use strict"; // Operate in Strict mode such that variables must be declared before used!
 
-class GameTest {
-    constructor(engine) {
+export default class GameTest {
+    constructor(engine: any) {
         this.init(engine);
     }
 
-    init(engine) {
-        // The shader for drawing
-        this.mShader = null;
-
+    init(engine: any) {
         // Step A: Initialize the webGL Context and the VertexBuffer
 
         // Step B: Create, load and compile the shaders
@@ -34,5 +31,3 @@ class GameTest {
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 }
-
-module.exports.GameTest = GameTest;

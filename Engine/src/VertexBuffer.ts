@@ -12,8 +12,13 @@
 
 "use strict"; // Operate in Strict mode such that variables must be declared before used!
 
-class VertexBuffer {
-    constructor(webGL) {
+export default class VertexBuffer {
+    private _webGL: any = null;
+    private gSquareVertexBuffer: any = null;
+    private mSquareVertexBuffer: any = null;
+    private verticesOfSquare: any = null;
+
+    constructor(webGL: any) {
         // The WebGL object reference
         this._webGL = webGL;
 
@@ -44,5 +49,3 @@ class VertexBuffer {
         return this.mSquareVertexBuffer;
     };
 }
-
-module.exports.VertexBuffer = VertexBuffer;

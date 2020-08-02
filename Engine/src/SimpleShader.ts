@@ -12,8 +12,15 @@
 
 //<editor-fold desc="constructor">
 // constructor of SimpleShader object
-class SimpleShader {
-    constructor(engine, vertexShaderID, fragmentShaderID) {
+export default class SimpleShader {
+    private _webGL: any = null;
+    private _vertexBuffer: any = null;
+    private vertexShaderID: any = null;
+    private fragmentShaderID: any = null;
+    private mCompiledShader: any = null;
+    private mShaderVertexPositionAttribute: any = null;
+
+    constructor(engine: any, vertexShaderID: string, fragmentShaderID: string) {
         this._webGL = engine.getGL();
         this._vertexBuffer = engine.getVertexBuffer();
         this.vertexShaderID = vertexShaderID;
@@ -25,7 +32,7 @@ class SimpleShader {
         this.mShaderVertexPositionAttribute = null; // reference to SquareVertexPosition within the shader
     }
 
-    initialize() {
+    public initialize() : void {
         // this._webGL = webGL;
 
         // Step A: load and compile vertex and fragment shaders
@@ -40,8 +47,7 @@ class SimpleShader {
 
         // Step C: check for error
         if (!this._webGL.getProgramParameter(this.mCompiledShader, this._webGL.LINK_STATUS)) {
-            alert("Error linking shader");
-            return null;
+            console.log("Error linking shader");
         }
 
         // Step D: Gets a reference to the aSquareVertexPosition attribute within the shaders.
@@ -78,8 +84,8 @@ class SimpleShader {
         this._webGL.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
     };
 
-    _loadAndCompileShader(id, shaderType) {
-        var shaderText, shaderSource, compiledShader;
+    _loadAndCompileShader(id: string, shaderType: number) {
+        let shaderText: any, shaderSource: any, compiledShader: any;
 
         // Step A: Get the shader source from index.html
         shaderText = document.getElementById(id);
@@ -96,11 +102,10 @@ class SimpleShader {
         // The log info is how shader compilation errors are typically displayed.
         // This is useful for debugging the shaders.
         if (!this._webGL.getShaderParameter(compiledShader, this._webGL.COMPILE_STATUS)) {
-            alert("A shader compiling error occurred: " + this._webGL.getShaderInfoLog(compiledShader));
+            console.log("A shader compiling error occurred: " + this._webGL.getShaderInfoLog(compiledShader));
         }
+
 
         return compiledShader;
     };
 }
-
-module.exports.SimpleShader = SimpleShader;
