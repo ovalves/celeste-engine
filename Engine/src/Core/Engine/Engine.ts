@@ -1,6 +1,7 @@
 import WebGL from './WebGL';
 import VertexBuffer from './VertexBuffer';
 import SimpleShader from '../Shader/SimpleShader';
+import Renderable from '../../Renderable/Renderable';
 
 /**
  * Game Engine Core Class
@@ -51,6 +52,13 @@ export default class Engine {
     getShader() : SimpleShader {
         return this._shader;
     };
+
+    /**
+     * Accessor of the renderable object
+     */
+    getRenderable() : Renderable {
+        return new Renderable(this._webGL);
+    }
 
     /**
      * Init Game Engine
