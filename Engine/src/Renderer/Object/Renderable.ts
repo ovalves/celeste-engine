@@ -1,9 +1,15 @@
-export default class Renderable {
+import Transform from './Transform';
 
+export default class Renderable {
     /**
      * WebGL Instance
      */
     private webGL: WebGLRenderingContext;
+
+    /**
+     * Game Object Transform Instance
+     */
+    private gameObjectTransform: Transform;
 
     /**
      * Shader Instance
@@ -21,6 +27,7 @@ export default class Renderable {
      */
     constructor(webGL: WebGLRenderingContext) {
         this.webGL  = <WebGLRenderingContext> webGL;
+        this.gameObjectTransform = new Transform();
     }
 
     /**
@@ -48,11 +55,15 @@ export default class Renderable {
         return this;
     }
 
+    public getTransform() : Transform {
+        return this.gameObjectTransform;
+    }
     /**
      * Draw object on the screen
      */
     public draw() {
-        this.shader.activateShader(this.color);
+        this.shader.activateShader(this.color); // always activate the shader first!
+        this.shader.loadObjectTransform(this.gameObjectTransform.getTransform());
         this.webGL.drawArrays(this.webGL.TRIANGLE_STRIP, 0, 4);
     }
 }

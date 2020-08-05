@@ -28,6 +28,11 @@ export default class SimpleShader {
     private uPixelColor: WebGLUniformLocation = 0;
 
     /**
+     * reference to the transform uniform of shader
+     */
+    private modelTransform: WebGLUniformLocation = 0;
+
+    /**
      *
      * @param webGL
      * @param vertexBuffer
@@ -85,7 +90,16 @@ export default class SimpleShader {
 
         // Step G: Gets a reference to the uniform variable uPixelColor in the fragment shader
         this.uPixelColor = <WebGLUniformLocation> this._webGL.getUniformLocation(this.mCompiledShader, "uPixelColor");
+        this.modelTransform = <WebGLUniformLocation> this._webGL.getUniformLocation(this.mCompiledShader, "uModelTransform");
     }
+
+    /**
+     * loads the modelTransform matrix into webGL to be used by the vertex shader
+     * @param modelTransform
+     */
+    public loadObjectTransform (modelTransform: any) {
+            this._webGL.uniformMatrix4fv(this.modelTransform, false, modelTransform);
+    };
 
     /**
      * Get the WebGLProgram Compiled Shader

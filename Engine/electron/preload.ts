@@ -4,7 +4,7 @@
 /**
  * Core Game Engine
  */
-import Engine from '../src/Core/Engine/Engine';
+import Engine from '../src/Core/Engine';
 
 /**
  * Simple game test

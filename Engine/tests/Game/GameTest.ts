@@ -37,8 +37,8 @@ export default class GameTest {
          */
         this.shader = engine.getShader();
         this.shader.addShader(
-            "../src/GLSLShaders/SimpleVS.glsl", // Path to the VertexShader
-            "../src/GLSLShaders/SimpleFS.glsl"   // Path to the FragmentShader
+            "../src/Renderer/Shader/GLSLShaders/SimpleVS.glsl", // Path to the VertexShader
+            "../src/Renderer/Shader/GLSLShaders/SimpleFS.glsl"   // Path to the FragmentShader
         );
 
         /**
@@ -60,10 +60,18 @@ export default class GameTest {
         // Step C: Limpando o canvas antes de desenhar os game objects
         engine.clearCanvas([0, 0.8, 0, 1]);
 
-        // Step D1: Desenhando o game object com shader branco (render1)
+        // Step E1: Desenhando o game object com shader branco (render1)
+        render1.getTransform().position().setPosition(-0.25, 0.25);
+        render1.getTransform().rotation().setRotationInRad(0.5); // In Radians
+        render1.getTransform().scale().setSize(0.5, 0.5);
         render1.draw();
 
-        // Step D2: Desenhando o game object com shader vermelho (render1)
+        // Step E3: Desenhando o game object com shader vermelho (render2)
+        render2.getTransform().position().setXPos(0.25);  // to show alternative to setPosition
+        render2.getTransform().position().setYPos(-0.25); // it is possible to setX/Y separately
+        render2.getTransform().rotation().setRotationInDegree(45);  // this is in Degree
+        render2.getTransform().scale().setWidth(0.4);  // to show alternative to setSize
+        render2.getTransform().scale().setHeight(0.4);  // that it is possible to width/height separately
         render2.draw();
     }
 }
