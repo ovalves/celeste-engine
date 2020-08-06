@@ -28,9 +28,14 @@ export default class SimpleShader {
     private uPixelColor: WebGLUniformLocation = 0;
 
     /**
-     * reference to the transform uniform of shader
+     * reference to model transform matrix in vertex shader
      */
     private modelTransform: WebGLUniformLocation = 0;
+
+    /**
+     * reference to the View/Projection matrix in the vertex shader
+     */
+    private viewProjectionTransform: WebGLUniformLocation = 0;
 
     /**
      *
@@ -91,6 +96,7 @@ export default class SimpleShader {
         // Step G: Gets a reference to the uniform variable uPixelColor in the fragment shader
         this.uPixelColor = <WebGLUniformLocation> this._webGL.getUniformLocation(this.mCompiledShader, "uPixelColor");
         this.modelTransform = <WebGLUniformLocation> this._webGL.getUniformLocation(this.mCompiledShader, "uModelTransform");
+        this.viewProjectionTransform = <WebGLUniformLocation> this._webGL.getUniformLocation(this.mCompiledShader, "uViewProjTransform");
     }
 
     /**
@@ -112,8 +118,9 @@ export default class SimpleShader {
      * Active the shader program
      * @param pixelColor
      */
-    public activateShader(pixelColor: Array<number>) {
+    public activateShader(pixelColor: Array<number>, vpMatrix: Array<number>) {
         this._webGL.useProgram(this.mCompiledShader);
+        this._webGL.uniformMatrix4fv(this.viewProjectionTransform, false, vpMatrix);
         this._webGL.bindBuffer(this._webGL.ARRAY_BUFFER, this._vertexBuffer.getGLVertexRef());
         this._webGL.vertexAttribPointer(this.mShaderVertexPositionAttribute,
             3,                 // each element is a 3-float (x,y.z)

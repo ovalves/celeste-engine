@@ -13,7 +13,7 @@ export default class Position {
         this.mPosition = vec2.fromValues(0, 0);  // this is the translation
     }
 
-    public setPosition(xPos: any, yPos: any) {
+    public setPosition(xPos: number, yPos: number) {
         this.setXPos(xPos); this.setYPos(yPos);
     }
 
@@ -25,11 +25,11 @@ export default class Position {
         return this.mPosition[0];
     }
 
-    public setXPos(xPos: any) {
+    public setXPos(xPos: number) {
         this.mPosition[0] = xPos;
     }
 
-    public incXPosBy(delta: any) {
+    public incXPosBy(delta: number) {
         this.mPosition[0] += delta;
     }
 
@@ -37,11 +37,11 @@ export default class Position {
         return this.mPosition[1];
     }
 
-    public setYPos(yPos: any) {
+    public setYPos(yPos: number) {
         this.mPosition[1] = yPos;
     }
 
-    public incYPosBy(delta: any) {
+    public incYPosBy(delta: number) {
         this.mPosition[1] += delta;
     }
 }

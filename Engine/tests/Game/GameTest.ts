@@ -42,36 +42,102 @@ export default class GameTest {
         );
 
         /**
-         * Criando instancias do renderable de game objects
+         * Criando 6 instancias da classe de criação de game object
          */
-        let renderable1 = engine.getRenderable();
-        let renderable2 = engine.getRenderable();
+        let obj1 = engine.getRenderable();
+        let obj2 = engine.getRenderable();
+        let obj3 = engine.getRenderable();
+        let obj4 = engine.getRenderable();
+        let obj5 = engine.getRenderable();
+        let obj6 = engine.getRenderable();
 
         /**
-         * Criando um objeto em branco unsando os shaders do passo B
+         * Alterando a cor dos shaders e criando 6 instancias de game object
          */
-        let render1 = renderable1.createObject(this.shader).setColor([0, 0, 1, 1]);
-
-        /**
-         * Criando um objeto em vermelho unsando os shaders do passo B
-         */
-        let render2 = renderable2.createObject(this.shader).setColor([1, 0, 0, 1]);
+        let render1 = obj1.createObject(this.shader).setColor([0.25, 0.25, 0.95, 1]);
+        let render2 = obj2.createObject(this.shader).setColor([1, 0.25, 0.25, 1]);
+        let render3 = obj3.createObject(this.shader).setColor([0.9, 0.1, 0.1, 1]);
+        let render4 = obj4.createObject(this.shader).setColor([0.1, 0.9, 0.1, 1]);
+        let render5 = obj5.createObject(this.shader).setColor([0.1, 0.1, 0.9, 1]);
+        let render6 = obj6.createObject(this.shader).setColor([0.1, 0.1, 0.1, 1]);
 
         // Step C: Limpando o canvas antes de desenhar os game objects
-        engine.clearCanvas([0, 0.8, 0, 1]);
+        engine.clearCanvas([0.9, 0.9, 0.9, 1]);
 
-        // Step E1: Desenhando o game object com shader branco (render1)
-        render1.getTransform().position().setPosition(-0.25, 0.25);
-        render1.getTransform().rotation().setRotationInRad(0.5); // In Radians
-        render1.getTransform().scale().setSize(0.5, 0.5);
-        render1.draw();
+        // Step E1: Criando a viewport no WebGL: Area no canvas para ser desenhada
+        engine.getGL().viewport(
+            20,     // x position of bottom-left corner of the area to be drawn
+            40,     // y position of bottom-left corner of the area to be drawn
+            600,    // width of the area to be drawn
+            300     // height of the area to be drawn
+        );
 
-        // Step E3: Desenhando o game object com shader vermelho (render2)
-        render2.getTransform().position().setXPos(0.25);  // to show alternative to setPosition
-        render2.getTransform().position().setYPos(-0.25); // it is possible to setX/Y separately
-        render2.getTransform().rotation().setRotationInDegree(45);  // this is in Degree
-        render2.getTransform().scale().setWidth(0.4);  // to show alternative to setSize
-        render2.getTransform().scale().setHeight(0.4);  // that it is possible to width/height separately
-        render2.draw();
+        // Step E2: Criando a area de corte com o mesmo tamanho da viewport para limpar a area do desenho
+        /**
+         * The scissor area tests and limits the area to be cleared.
+         * Since the testing involved in scissor() is computationally expensive, it is disabled immediately after use.
+         */
+        engine.getGL().scissor(
+            20,     // x position of bottom-left corner of the area to be drawn
+            40,     // y position of bottom-left corner of the area to be drawn
+            600,    // width of the area to be drawn
+            300     // height of the area to be drawn
+        );
+
+        // Step E3: enable the scissor area, clear, and then disable the scissor area
+        engine.getGL().enable(engine.getGL().SCISSOR_TEST);
+        engine.clearCanvas([0.8, 0.8, 0.8, 1.0]);  // clear the scissor area
+        engine.getGL().disable(engine.getGL().SCISSOR_TEST);
+
+
+        // F: Set up View and Projection matrices">
+        var viewMatrix = engine.getMatrix4().create();
+        var projMatrix = engine.getMatrix4().create();
+        // Step F1: define the view matrix
+        engine.getMatrix4().lookAt(viewMatrix,
+            [20, 60, 10],   // camera position
+            [20, 60, 0],    // look at position
+            [0, 1, 0]);     // orientation
+
+        // Step F2: define the projection matrix
+        engine.getMatrix4().ortho(projMatrix,
+            -10,     // distance to left of WC
+            10,     // distance to right of WC
+            -5,      // distance to bottom of WC
+            5,      // distance to top of WC
+            0,      // distance to near plane
+            1000);  // distance to far plane
+
+        var vpMatrix = engine.getMatrix4().create();
+        engine.getMatrix4().multiply(vpMatrix, projMatrix, viewMatrix);
+
+        // Step G: Draw the blue square
+        // Centre Blue, slightly rotated square
+        render1.getTransform().position().setPosition(20, 60);
+        render1.getTransform().rotation().setRotationInRad(0.2); // In Radians
+        render1.getTransform().scale().setSize(5, 5);
+        render1.draw(vpMatrix);
+
+        // Step H: Draw the center and the corner squares
+        // centre red square
+        render2.getTransform().position().setPosition(20, 60);
+        render2.getTransform().scale().setSize(2, 2);
+        render2.draw(vpMatrix);
+
+        // top left
+        render3.getTransform().position().setPosition(10, 65);
+        render3.draw(vpMatrix);
+
+        // top right
+        render4.getTransform().position().setPosition(30, 65);
+        render4.draw(vpMatrix);
+
+        // bottom right
+        render5.getTransform().position().setPosition(30, 55);
+        render5.draw(vpMatrix);
+
+        // bottom left
+        render6.getTransform().position().setPosition(10, 55);
+        render6.draw(vpMatrix);
     }
 }

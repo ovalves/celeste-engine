@@ -11,22 +11,22 @@ export default class Rotation {
         this.mRotationInRad = 0.0;
     }
 
-    public setRotationInRad(rotationInRadians: any) {
+    public setRotationInRad(rotationInRadians: number) {
         this.mRotationInRad = rotationInRadians;
         while (this.mRotationInRad > (2 * Math.PI)) {
             this.mRotationInRad -= (2 * Math.PI);
         }
     };
 
-    public setRotationInDegree(rotationInDegree: any) {
+    public setRotationInDegree(rotationInDegree: number) {
         this.setRotationInRad(rotationInDegree * Math.PI / 180.0);
     };
 
-    public incRotationByDegree(deltaDegree: any) {
+    public incRotationByDegree(deltaDegree: number) {
         this.incRotationByRad(deltaDegree * Math.PI / 180.0);
     };
 
-    public incRotationByRad(deltaRad: any) {
+    public incRotationByRad(deltaRad: number) {
         this.setRotationInRad(this.mRotationInRad + deltaRad);
     };
 
