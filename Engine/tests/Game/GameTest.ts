@@ -62,7 +62,7 @@ export default class GameTest {
          * Alterando a cor dos shaders e criando 6 instancias de game object
          */
         let render1 = obj1.createObject(this.shader).setColor([0.25, 0.25, 0.95, 1]);
-        let render2 = obj2.createObject(this.shader).setColor([1, 0.25, 0.25, 1]);
+        let render2 = obj2.createObject(this.shader).setColor([0.8, 0.8, 0, 1]);
         let render3 = obj3.createObject(this.shader).setColor([0.9, 0.1, 0.1, 1]);
         let render4 = obj4.createObject(this.shader).setColor([0.1, 0.9, 0.1, 1]);
         let render5 = obj5.createObject(this.shader).setColor([0.1, 0.1, 0.9, 1]);

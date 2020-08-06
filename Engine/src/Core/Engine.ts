@@ -1,6 +1,5 @@
 import { vec2, vec3, mat2, mat2d, mat3, mat4, quat, quat2 } from 'gl-matrix';
 
-
 import WebGL from './WebGL';
 import VertexBuffer from './VertexBuffer';
 import SimpleShader from '../Renderer/Shader/SimpleShader';
@@ -64,6 +63,9 @@ export default class Engine {
         return new Renderable(this._webGL);
     }
 
+    /**
+     * Accessor of the Camera Viewport object
+     */
     public getCamera() : Camera {
         return new Camera(this._webGL);
     }
