@@ -5,6 +5,7 @@ import WebGL from './WebGL';
 import VertexBuffer from './VertexBuffer';
 import SimpleShader from '../Renderer/Shader/SimpleShader';
 import Renderable from '../Renderer/Object/Renderable';
+import Camera from '../Scene/Camera';
 
 /**
  * Game Engine Core Class
@@ -61,6 +62,10 @@ export default class Engine {
      */
     public getRenderable() : Renderable {
         return new Renderable(this._webGL);
+    }
+
+    public getCamera() : Camera {
+        return new Camera(this._webGL);
     }
 
     /**

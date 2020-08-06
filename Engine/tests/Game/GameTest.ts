@@ -28,6 +28,13 @@ export default class GameTest {
          *  - O render de game objects (Renderable) é iniciado
          */
 
+        // Step B: Setup the camera
+        let mCamera = engine.getCamera().create(
+            engine.getVector2().fromValues(20, 60), // center of the WC
+            20,                                     // width of WC
+            [20, 40, 600, 300]                      // viewport (orgX, orgY, width, height)
+        );
+
         /**
          * Step B:
          *  - Buscando uma instancia do criador de shader
@@ -64,52 +71,9 @@ export default class GameTest {
         // Step C: Limpando o canvas antes de desenhar os game objects
         engine.clearCanvas([0.9, 0.9, 0.9, 1]);
 
-        // Step E1: Criando a viewport no WebGL: Area no canvas para ser desenhada
-        engine.getGL().viewport(
-            20,     // x position of bottom-left corner of the area to be drawn
-            40,     // y position of bottom-left corner of the area to be drawn
-            600,    // width of the area to be drawn
-            300     // height of the area to be drawn
-        );
-
-        // Step E2: Criando a area de corte com o mesmo tamanho da viewport para limpar a area do desenho
-        /**
-         * The scissor area tests and limits the area to be cleared.
-         * Since the testing involved in scissor() is computationally expensive, it is disabled immediately after use.
-         */
-        engine.getGL().scissor(
-            20,     // x position of bottom-left corner of the area to be drawn
-            40,     // y position of bottom-left corner of the area to be drawn
-            600,    // width of the area to be drawn
-            300     // height of the area to be drawn
-        );
-
-        // Step E3: enable the scissor area, clear, and then disable the scissor area
-        engine.getGL().enable(engine.getGL().SCISSOR_TEST);
-        engine.clearCanvas([0.8, 0.8, 0.8, 1.0]);  // clear the scissor area
-        engine.getGL().disable(engine.getGL().SCISSOR_TEST);
-
-
-        // F: Set up View and Projection matrices">
-        var viewMatrix = engine.getMatrix4().create();
-        var projMatrix = engine.getMatrix4().create();
-        // Step F1: define the view matrix
-        engine.getMatrix4().lookAt(viewMatrix,
-            [20, 60, 10],   // camera position
-            [20, 60, 0],    // look at position
-            [0, 1, 0]);     // orientation
-
-        // Step F2: define the projection matrix
-        engine.getMatrix4().ortho(projMatrix,
-            -10,     // distance to left of WC
-            10,     // distance to right of WC
-            -5,      // distance to bottom of WC
-            5,      // distance to top of WC
-            0,      // distance to near plane
-            1000);  // distance to far plane
-
-        var vpMatrix = engine.getMatrix4().create();
-        engine.getMatrix4().multiply(vpMatrix, projMatrix, viewMatrix);
+        // Step F: Starts the drawing by activating the camera
+        mCamera.setupViewProjection();
+        let vpMatrix = mCamera.getVPMatrix();
 
         // Step G: Draw the blue square
         // Centre Blue, slightly rotated square
