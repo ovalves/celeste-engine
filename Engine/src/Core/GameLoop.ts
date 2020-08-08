@@ -62,7 +62,7 @@ export default class GameLoop {
             //      Update only every Milliseconds per frame.
             //      If lag larger then update frames, update until caught up.
             while ((this.mLagTime >= this.kMPF) && this.mIsLoopRunning) {
-
+                this.engine.getInput().update();
                 /**
                  * call game scripts update method
                  */

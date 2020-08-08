@@ -60,10 +60,20 @@ export default class FirstScript extends MonoBehaviour {
         var deltaX = 0.05;
 
         // this is the right-bound of the window
-        if (transformGameObject1.position().getXPos() > 30) {
-            transformGameObject1.position().setPosition(10, 60);
+        const RIGHT = this.getInput().getKey(this.key().RIGHT);
+        const UP = this.getInput().getKey(this.key().UP);
+
+        if (this.getInput().isKeyPressed(RIGHT)) {
+            console.log('pressed');
+            if (transformGameObject1.position().getXPos() > 30) {
+                transformGameObject1.position().setPosition(10, 60);
+            }
+            transformGameObject1.position().incXPosBy(deltaX);
         }
-        transformGameObject1.position().incXPosBy(deltaX);
-        transformGameObject1.rotation().incRotationByDegree(1);
+
+        if (this.getInput().isKeyClicked(UP)) {
+            console.log('pressed 2');
+            transformGameObject1.rotation().incRotationByDegree(10);
+        }
     }
 }

@@ -3,6 +3,7 @@ import WebGL from './WebGL';
 import VertexBuffer from './VertexBuffer';
 import SimpleShader from '../Renderer/Shader/SimpleShader';
 import Camera from '../Scene/Camera';
+import Input from '../Events/Input/Input';
 
 /**
  * Game Engine Core Class
@@ -24,6 +25,11 @@ export default class Engine {
     private _shader: SimpleShader;
 
     /**
+     * Shader Instance
+     */
+    private _input: Input;
+
+    /**
      * Constructor
      * @param htmlCanvasID Canvas id on HTML Document
      */
@@ -31,6 +37,7 @@ export default class Engine {
         this._webGL        = new WebGL(htmlCanvasID).getWebGL();
         this._vertexBuffer = new VertexBuffer(this._webGL);
         this._shader       = new SimpleShader();
+        this._input        = new Input;
     }
 
     /**
@@ -62,6 +69,13 @@ export default class Engine {
     }
 
     /**
+     * Accessor of the Camera Viewport object
+     */
+    public getInput() : Input {
+        return this._input;
+    }
+
+    /**
      * Init Game Engine
      */
     init(scripts: any) : Engine {
@@ -77,6 +91,8 @@ export default class Engine {
             this._webGL,
             this._vertexBuffer
         );
+
+        this._input.initialize();
 
         /**
          * initialize the GameLoop

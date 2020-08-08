@@ -55,10 +55,11 @@ export default class SecondScript extends MonoBehaviour {
         // Step B: pulse the red square
         var transformGameObject2 = this.gameObject2.getTransform();
 
-        if (transformGameObject2.scale().getWidth() > 5) {
-            transformGameObject2.scale().setSize(2, 2);
+        if (this.getInput().isKeyPressed(this.getInput().getKey(this.key().DOWN))) {
+            if (transformGameObject2.scale().getWidth() > 5) {
+                transformGameObject2.scale().setSize(2, 2);
+            }
+            transformGameObject2.scale().incSizeBy(0.05);
         }
-
-        transformGameObject2.scale().incSizeBy(0.05);
     }
 }

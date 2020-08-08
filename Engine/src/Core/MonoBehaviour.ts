@@ -2,6 +2,8 @@ import { vec2, vec3, mat2, mat2d, mat3, mat4, quat, quat2 } from 'gl-matrix';
 import SimpleShader from '../Renderer/Shader/SimpleShader';
 import Renderable from '../Renderer/Object/Renderable';
 import Camera from '../Scene/Camera';
+import Input from '../Events/Input/Input';
+import Keys from '../Events/Input/Keys';
 
 /**
  * Game Engine Core Class
@@ -47,6 +49,20 @@ export default abstract class MonoBehaviour {
      */
     public getCamera() : Camera {
         return this.camera;
+    }
+
+    /**
+     * Accessor of the Camera Viewport object
+     */
+    public getInput() : Input {
+        return this.engine.getInput();
+    }
+
+    /**
+     * Accessor of the Camera Viewport object
+     */
+    public key() : Keys {
+        return this.engine.getInput().getKeys();
     }
 
     /**
