@@ -11,7 +11,7 @@ export default class SecondScript extends MonoBehaviour {
      * Init game test
      * @param engine
      */
-    start() {
+    start() : void {
          /**
          * Step B:
          *  - Buscando uma instancia do criador de shader
@@ -43,13 +43,13 @@ export default class SecondScript extends MonoBehaviour {
         this.gameObject2.getTransform().scale().setSize(2, 2);
     }
 
-    public draw() {
+    public draw() : void {
 
         // Step  D: Activate the red shader to draw
         this.gameObject2.draw(this.getCamera().getVPMatrix());
     }
 
-    public update() {
+    public update() : void {
         // For this very simple game, let's move the white square and pulse the red
 
         // Step B: pulse the red square

@@ -12,7 +12,7 @@ export default class FirstScript extends MonoBehaviour {
     /**
      *
      */
-    public start() {
+    public start() : void {
         /**
          * Step B:
          *  - Buscando uma instancia do criador de shader
@@ -44,7 +44,7 @@ export default class FirstScript extends MonoBehaviour {
     /**
      *
      */
-    public draw() {
+    public draw() : void {
         // Step  C: Activate the white shader to draw
         this.gameObject1.draw(this.getCamera().getVPMatrix());
     }
@@ -52,7 +52,7 @@ export default class FirstScript extends MonoBehaviour {
     /**
      *
      */
-    public update() {
+    public update() : void {
         // For this very simple game, let's move the white square and pulse the red
 
         // Step A: move the white square

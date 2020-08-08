@@ -6,7 +6,7 @@ import Camera from '../Scene/Camera';
 /**
  * Game Engine Core Class
  */
-export default class MonoBehaviour {
+export default abstract class MonoBehaviour {
     /**
      * Engine class
      */
@@ -104,4 +104,8 @@ export default class MonoBehaviour {
     public getQuaternion2() : Object {
         return quat2;
     }
+
+    abstract start() : void;
+    abstract update() : void;
+    abstract draw() : void;
 }
