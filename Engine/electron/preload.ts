@@ -8,17 +8,14 @@ import Engine from '../src/Core/Engine';
 
 /**
  * Simple game test
+ * Importando todos os arquivos presentes na pasta scene/scripts
+ * Esses arquivos serão injetados dentro do gameLoop
  */
-import GameTest from '../tests/Game/GameTest';
+import * as scripts from "../tests/Game/scene/scripts";
 
 window.addEventListener('DOMContentLoaded', () => {
     /**
      * Loads the Game Engine
      */
-    const engine = new Engine('GLCanvas').init();
-
-    /**
-     * Loads and Running a simple game test
-     */
-    new GameTest(engine);
+    new Engine('GLCanvas').init(scripts);
 })
