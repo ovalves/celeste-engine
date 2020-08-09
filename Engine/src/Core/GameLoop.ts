@@ -62,6 +62,9 @@ export default class GameLoop {
             //      Update only every Milliseconds per frame.
             //      If lag larger then update frames, update until caught up.
             while ((this.mLagTime >= this.kMPF) && this.mIsLoopRunning) {
+                /**
+                 * Atualiza o registro de eventos de inputs
+                 */
                 this.engine.getInput().update();
                 /**
                  * call game scripts update method
@@ -108,7 +111,6 @@ export default class GameLoop {
          */
         let firstScript = new scripts.FirstScript(this.engine, this.camera);
         let secondScript = new scripts.SecondScript(this.engine, this.camera);
-
         firstScript.start();
         secondScript.start();
 
@@ -116,6 +118,8 @@ export default class GameLoop {
          * @todo melhorar a forma como instanciar os scripts da cena
          */
         this.gameScripts = [firstScript, secondScript];
+
+
 
         // Step A: reset frame time
         this.mPreviousTime = Date.now();

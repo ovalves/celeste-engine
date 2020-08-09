@@ -1,9 +1,10 @@
 import GameLoop from './GameLoop';
 import WebGL from './WebGL';
 import VertexBuffer from './VertexBuffer';
-import SimpleShader from '../Renderer/Shader/SimpleShader';
 import Camera from '../Scene/Camera';
 import Input from '../Events/Input/Input';
+import DefaultResourcesLoader from './Resources/DefaultResourcesLoader';
+import ResourceMap from './Resources/ResourceMap';
 
 /**
  * Game Engine Core Class
@@ -20,14 +21,20 @@ export default class Engine {
     private _vertexBuffer: VertexBuffer;
 
     /**
-     * Shader Instance
-     */
-    private _shader: SimpleShader;
-
-    /**
-     * Shader Instance
+     * Input Manager Instance
      */
     private _input: Input;
+
+    /**
+     * ResourceMap Instance
+     */
+    private _resourceMap: ResourceMap;
+
+    /**
+     * DefaultResourcesLoader Instance
+     */
+    private _defaultResourcesLoader: DefaultResourcesLoader;
+
 
     /**
      * Constructor
@@ -36,8 +43,13 @@ export default class Engine {
     constructor(htmlCanvasID: string) {
         this._webGL        = new WebGL(htmlCanvasID).getWebGL();
         this._vertexBuffer = new VertexBuffer(this._webGL);
-        this._shader       = new SimpleShader();
         this._input        = new Input;
+        this._resourceMap = new ResourceMap;
+        this._defaultResourcesLoader = new DefaultResourcesLoader(
+            this._webGL,
+            this._vertexBuffer,
+            this._resourceMap
+        );
     }
 
     /**
@@ -55,13 +67,6 @@ export default class Engine {
     }
 
     /**
-     * Accessor of the SimpleShader context
-     */
-    public getShader() : SimpleShader {
-        return this._shader;
-    }
-
-    /**
      * Accessor of the Camera Viewport object
      */
     public getCamera() : Camera {
@@ -76,30 +81,32 @@ export default class Engine {
     }
 
     /**
+     *
+     */
+    public getShader() {
+        return this._defaultResourcesLoader.getShader();
+    }
+
+    /**
      * Init Game Engine
      */
     init(scripts: any) : Engine {
-        /**
-         * initialize the VertexBuffer
-         */
         this._vertexBuffer.initialize();
-
-        /**
-         * initialize the shaders
-         */
-        this._shader.initialize(
-            this._webGL,
-            this._vertexBuffer
-        );
-
         this._input.initialize();
+        this._defaultResourcesLoader.initialize(() => this.startScene(scripts));
+        return this;
+    };
 
+    /**
+     * Start the game scene
+     * @param scripts
+     */
+    startScene(scripts: any) {
         /**
          * initialize the GameLoop
          */
         (new GameLoop(this)).start(scripts);
-        return this;
-    };
+    }
 
     /**
      * Clear Canvas HTML element

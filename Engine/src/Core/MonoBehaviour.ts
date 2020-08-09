@@ -33,7 +33,14 @@ export default abstract class MonoBehaviour {
     /**
      * Accessor of the SimpleShader context
      */
-    public getShader() : SimpleShader {
+    public getColorShader() {
+        return this.engine.getColorShader();
+    }
+
+    /**
+     * Accessor of the SimpleShader context
+     */
+    public getShader() {
         return this.engine.getShader();
     }
 

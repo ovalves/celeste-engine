@@ -19,11 +19,8 @@ export default class SecondScript extends MonoBehaviour {
          *      - Passos executados pela game engine ao adicionar novos shaders
          *          - A game engine irá criar, carregar e compilar os programas dos shaders internamente
          */
+        // let shader = this.getColorShader();
         let shader = this.getShader();
-        shader.addShader(
-            "../src/Renderer/Shader/GLSLShaders/SimpleVS.glsl", // Path to the VertexShader
-            "../src/Renderer/Shader/GLSLShaders/SimpleFS.glsl"   // Path to the FragmentShader
-        );
 
         /**
          * Criando 2 instancias da classe de criação de game object

@@ -13,6 +13,11 @@ export default class SimpleShader {
     private _vertexBuffer: any;
 
     /**
+     * Vertex Buffer Instance
+     */
+    private _resourceMap: any;
+
+    /**
      * reference to the compiled shader in webgl context
      */
     private mCompiledShader: WebGLProgram = [];
@@ -42,9 +47,10 @@ export default class SimpleShader {
      * @param webGL
      * @param vertexBuffer
      */
-    public initialize(webGL: WebGLRenderingContext, vertexBuffer: any) : void {
+    public constructor(webGL: WebGLRenderingContext, vertexBuffer: any, resourceMap: any) {
         this._webGL        = <WebGLRenderingContext> webGL;
         this._vertexBuffer = vertexBuffer;
+        this._resourceMap = resourceMap
     }
 
     /**
@@ -52,10 +58,10 @@ export default class SimpleShader {
      * @param vertexShaderPath
      * @param fragmentShaderPath
      */
-    public addShader(vertexShaderPath: string, fragmentShaderPath: string) : void {
+    public initialize(vertexShaderPath: string, fragmentShaderPath: string) : void {
         // Step A: load and compile vertex and fragment shaders
-        let vertexShader = this.loadAndCompileShader(vertexShaderPath, this._webGL.VERTEX_SHADER);
-        let fragmentShader = this.loadAndCompileShader(fragmentShaderPath, this._webGL.FRAGMENT_SHADER);
+        let vertexShader = this.compileShader(vertexShaderPath, this._webGL.VERTEX_SHADER);
+        let fragmentShader = this.compileShader(fragmentShaderPath, this._webGL.FRAGMENT_SHADER);
         this.createShaderProgram(vertexShader, fragmentShader)
     }
 
@@ -110,7 +116,7 @@ export default class SimpleShader {
     /**
      * Get the WebGLProgram Compiled Shader
      */
-    public getShader() : WebGLProgram{
+    public getShader() : WebGLProgram {
         return this.mCompiledShader;
     };
 
@@ -137,11 +143,11 @@ export default class SimpleShader {
      * @param filePath
      * @param shaderType
      */
-    private loadAndCompileShader(filePath: string, shaderType: number) : WebGLShader{
+    private compileShader(filePath: string, shaderType: number) : WebGLShader{
         let shaderSource: any, compiledShader: any, xmlReq;
 
-        // Step A: Request the text from the given file location.
-        shaderSource = this.getShaderSource(filePath);
+        // Step A: Access the shader textfile
+        shaderSource = this._resourceMap.retrieveAsset(filePath);
 
         // Step B: Create the shader based on the shader type: vertex or fragment
         compiledShader = this._webGL.createShader(shaderType);
@@ -159,28 +165,4 @@ export default class SimpleShader {
 
         return compiledShader;
     };
-
-    /**
-     * Get the shader source from shaders folder
-     * @param filePath
-     */
-    private getShaderSource(filePath: string) : string {
-        let shaderSource: any,
-
-        xmlReq = new XMLHttpRequest();
-        xmlReq.open('GET', filePath, false);
-        try {
-            xmlReq.send();
-        } catch (error) {
-            alert("Failed to load shader: " + filePath + " [Hint: you cannot double click index.html to run this project. " +
-                    "The index.html file must be loaded by a web-server.]");
-        }
-        shaderSource = xmlReq.responseText;
-
-        if (shaderSource === null) {
-            alert("WARNING: Loading of:" + filePath + " Failed!");
-        }
-
-        return shaderSource;
-    }
 }

@@ -62,6 +62,12 @@ export default class Renderable {
      * Draw object on the screen
      */
     public draw(vpMatrix: Array<number>) {
+        /**
+         * Prevenindo a chamada de ativação do shader enquanto o mesmo ainda está sendo carregado
+         */
+        if (!this.shader) {
+            return;
+        }
         this.shader.activateShader(this.color, vpMatrix); // always activate the shader first!
         this.shader.loadObjectTransform(this.gameObjectTransform.getTransform());
         this.webGL.drawArrays(this.webGL.TRIANGLE_STRIP, 0, 4);

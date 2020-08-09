@@ -20,11 +20,8 @@ export default class FirstScript extends MonoBehaviour {
          *      - Passos executados pela game engine ao adicionar novos shaders
          *          - A game engine irá criar, carregar e compilar os programas dos shaders internamente
          */
+        // let shader = this.getColorShader();
         let shader = this.getShader();
-        shader.addShader(
-            "../src/Renderer/Shader/GLSLShaders/SimpleVS.glsl", // Path to the VertexShader
-            "../src/Renderer/Shader/GLSLShaders/SimpleFS.glsl"   // Path to the FragmentShader
-        );
 
         /**
          * Criando 2 instancias da classe de criação de game object
@@ -64,7 +61,6 @@ export default class FirstScript extends MonoBehaviour {
         const UP = this.getInput().getKey(this.key().UP);
 
         if (this.getInput().isKeyPressed(RIGHT)) {
-            console.log('pressed');
             if (transformGameObject1.position().getXPos() > 30) {
                 transformGameObject1.position().setPosition(10, 60);
             }
@@ -72,7 +68,6 @@ export default class FirstScript extends MonoBehaviour {
         }
 
         if (this.getInput().isKeyClicked(UP)) {
-            console.log('pressed 2');
             transformGameObject1.rotation().incRotationByDegree(10);
         }
     }
