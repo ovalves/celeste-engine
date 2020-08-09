@@ -11,7 +11,7 @@ import Engine from '../src/Core/Engine';
  * Importando todos os arquivos presentes na pasta scene/scripts
  * Esses arquivos serão injetados dentro do gameLoop
  */
-import * as scripts from "../tests/Game/scene/scripts";
+import * as scripts from "../tests/Game/assets/scripts";
 
 window.addEventListener('DOMContentLoaded', () => {
     /**

@@ -35,7 +35,6 @@ export default class Engine {
      */
     private _defaultResourcesLoader: DefaultResourcesLoader;
 
-
     /**
      * Constructor
      * @param htmlCanvasID Canvas id on HTML Document
@@ -105,7 +104,14 @@ export default class Engine {
         /**
          * initialize the GameLoop
          */
-        (new GameLoop(this)).start(scripts);
+
+        this.changeScene(null);
+
+        // (new GameLoop(this)).start(scripts);
+    }
+
+    changeScene(sceneName: string) {
+        this._defaultResourcesLoader.loadScene(sceneName);
     }
 
     /**

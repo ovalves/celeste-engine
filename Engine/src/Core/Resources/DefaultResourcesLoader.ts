@@ -2,6 +2,7 @@ import ResourceMap from './ResourceMap';
 import ResourceLoader from './ResourceLoader';
 import TextFileLoader from './TextFileLoader';
 import SimpleShader from '../../Renderer/Shader/SimpleShader';
+import SceneFileParser from '../../Scene/SceneFileParser';
 
 export default class DefaultResourcesLoader {
     private _webGL: WebGLRenderingContext;
@@ -10,12 +11,17 @@ export default class DefaultResourcesLoader {
     private _resourceMap: ResourceMap;
     private resourceLoader: ResourceLoader;
     private textFileLoader: TextFileLoader;
+    /**
+     * SceneFileParser Instance
+     */
+    private _sceneFileParser: SceneFileParser;
 
     /**
      * Simple Shader
      */
     private kSimpleVS: string;
     private kSimpleFS: string;
+    private mainSceneFile: string;
 
     /**
      *
@@ -24,6 +30,7 @@ export default class DefaultResourcesLoader {
     constructor(webGL: WebGLRenderingContext, vertexBuffer: any,resourceMap: ResourceMap) {
         this.kSimpleVS = "../src/Renderer/Shader/GLSLShaders/SimpleVS.glsl";  // Path to the VertexShader
         this.kSimpleFS = "../src/Renderer/Shader/GLSLShaders/SimpleFS.glsl";  // Path to the simple FragmentShader
+        this.mainSceneFile = "../tests/Game/assets/scenes/scene.xml"; // Path to the main game scene
 
         this._webGL = webGL;
         this._vertexBuffer = vertexBuffer;
@@ -31,6 +38,7 @@ export default class DefaultResourcesLoader {
 
         this.resourceLoader = new ResourceLoader(this._resourceMap);
         this.textFileLoader = new TextFileLoader(this._resourceMap, this.resourceLoader);
+        this._sceneFileParser = new SceneFileParser(this._resourceMap, this.textFileLoader);
     }
 
     /**
@@ -59,22 +67,51 @@ export default class DefaultResourcesLoader {
     };
 
     /**
-     *  Loads the shaders resources
+     * @todo melhorar a chamada para a função de callback
+     * @todo ela está sendo chamada para cada carregamento de arquivos
+     *
+     * Loads the shaders resources
      * @param callBackFunction
      */
     initialize (callBackFunction: CallableFunction) {
         this.textFileLoader.loadTextFile(
             this.kSimpleVS,
             this.resourceLoader.MAPPED_FILE_TYPE.TEXT_FILE,
-            callBackFunction
+            () => console.log('loaded')
         );
 
         this.textFileLoader.loadTextFile(
             this.kSimpleFS,
             this.resourceLoader.MAPPED_FILE_TYPE.TEXT_FILE,
-            callBackFunction
+            () => console.log('loaded')
         );
 
         this._resourceMap.setLoadCompleteCallback(() => this.createShaders(callBackFunction));
     };
+
+    /**
+     * Loads the scene file by name
+     * @param sceneName
+     */
+    loadScene (sceneName: string) {
+        if (!sceneName) {
+            sceneName = this.mainSceneFile;
+        }
+
+        this.textFileLoader.loadTextFile(
+            sceneName,
+            this.resourceLoader.MAPPED_FILE_TYPE.XML_FILE,
+            () => this.parseSceneFile(sceneName)
+        );
+    };
+
+    /**
+     * Parse the scene file
+     */
+    private parseSceneFile(sceneName: string) {
+        if (!sceneName) {
+            return;
+        }
+        this._sceneFileParser.parse(sceneName)
+    }
 }
