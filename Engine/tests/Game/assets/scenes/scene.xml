@@ -1,6 +1,6 @@
 <MyGameLevel>
-    <script src="../tests/Game/assets/scripts/script3.ts" class="FirstScript"/>
-    <script src="../tests/Game/assets/scripts/script2.ts" class="SecondScript" />
+    <script src="../tests/Game/assets/scripts/script1.js" />
+    <script src="../tests/Game/assets/scripts/script2.js" />
 
 <!--  *** be careful!! comma (,) is not a supported syntax!!  -->
 <!--  make sure there are no comma in between attributes -->

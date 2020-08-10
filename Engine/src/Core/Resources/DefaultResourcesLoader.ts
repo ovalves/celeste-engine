@@ -64,7 +64,7 @@ export default class DefaultResourcesLoader {
         this._shader.initialize(this.kSimpleVS, this.kSimpleFS);
 
         callBackFunction();
-    };
+    }
 
     /**
      * @todo melhorar a chamada para a função de callback
@@ -87,13 +87,13 @@ export default class DefaultResourcesLoader {
         );
 
         this._resourceMap.setLoadCompleteCallback(() => this.createShaders(callBackFunction));
-    };
+    }
 
     /**
      * Loads the scene file by name
      * @param sceneName
      */
-    loadScene (sceneName: string) {
+    loadScene (sceneName: string, gameLoop: any) {
         if (!sceneName) {
             sceneName = this.mainSceneFile;
         }
@@ -101,17 +101,26 @@ export default class DefaultResourcesLoader {
         this.textFileLoader.loadTextFile(
             sceneName,
             this.resourceLoader.MAPPED_FILE_TYPE.XML_FILE,
-            () => this.parseSceneFile(sceneName)
+            () => this.parseSceneFile(sceneName, gameLoop)
         );
-    };
+    }
+
+    /**
+     *
+     */
+    public getLoadedScripts() : Array<number|Object> {
+        return this._sceneFileParser.getLoadedScripts();
+    }
 
     /**
      * Parse the scene file
      */
-    private parseSceneFile(sceneName: string) {
+    private parseSceneFile(sceneName: string, gameLoop: any) : void {
         if (!sceneName) {
             return;
         }
-        this._sceneFileParser.parse(sceneName)
+
+        this._sceneFileParser.parse(sceneName);
+        gameLoop.loadScripts(this.getLoadedScripts());
     }
 }

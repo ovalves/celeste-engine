@@ -1,17 +1,17 @@
-import MonoBehaviour from '../../../../src/Core/MonoBehaviour';
-
 /**
  * A simple game test class
  */
-export default class SecondScript extends MonoBehaviour {
-    // variables for the squares
-    private gameObject2: any = null;
+class SecondScript {
+    constructor(MonoBehaviour) {
+        this.gameObject1 = null;
+        this.monoBehaviour = MonoBehaviour;
+    }
 
     /**
      * Init game test
      * @param engine
      */
-    start() : void {
+    start() {
          /**
          * Step B:
          *  - Buscando uma instancia do criador de shader
@@ -20,12 +20,12 @@ export default class SecondScript extends MonoBehaviour {
          *          - A game engine irá criar, carregar e compilar os programas dos shaders internamente
          */
         // let shader = this.getColorShader();
-        let shader = this.getShader();
+        let shader = this.monoBehaviour.getShader();
 
         /**
          * Criando 2 instancias da classe de criação de game object
          */
-        let renderGameObject2 = this.getRenderable();
+        let renderGameObject2 = this.monoBehaviour.getRenderable();
 
             /**
          * Alterando a cor dos shaders e criando 6 instancias de game object
@@ -40,19 +40,19 @@ export default class SecondScript extends MonoBehaviour {
         this.gameObject2.getTransform().scale().setSize(2, 2);
     }
 
-    public draw() : void {
+    draw() {
 
         // Step  D: Activate the red shader to draw
-        this.gameObject2.draw(this.getCamera().getVPMatrix());
+        this.gameObject2.draw(this.monoBehaviour.getCamera().getVPMatrix());
     }
 
-    public update() : void {
+    update() {
         // For this very simple game, let's move the white square and pulse the red
 
         // Step B: pulse the red square
         var transformGameObject2 = this.gameObject2.getTransform();
 
-        if (this.getInput().isKeyPressed(this.getInput().getKey(this.key().DOWN))) {
+        if (this.monoBehaviour.getInput().isKeyPressed(this.monoBehaviour.getInput().getKey(this.monoBehaviour.key().DOWN))) {
             if (transformGameObject2.scale().getWidth() > 5) {
                 transformGameObject2.scale().setSize(2, 2);
             }
@@ -60,3 +60,5 @@ export default class SecondScript extends MonoBehaviour {
         }
     }
 }
+
+module.exports = SecondScript;

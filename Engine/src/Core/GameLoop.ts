@@ -1,5 +1,7 @@
 import { vec2 } from 'gl-matrix';
 
+import MonoBehaviour from './MonoBehaviour';
+
 export default class GameLoop {
     /**
      * Engine class
@@ -36,7 +38,7 @@ export default class GameLoop {
     /**
      * Game scripts
      */
-    private gameScripts: Array<Object> = [];
+    private gameScripts: Array<number|Object> = [];
 
     /**
      * Constructor
@@ -91,10 +93,10 @@ export default class GameLoop {
     };
 
     /**
-     * Start de the game loop
+     * Carrega os arquivos presentes na cena
      * @param scripts
      */
-    public start (scripts: any) {
+    public loadScripts (scripts: any) {
         /**
          * @todo melhorar a forma de criar a camera da cena
          * @todo a criação da camera deve pertencer a classe da cena
@@ -106,20 +108,26 @@ export default class GameLoop {
             [20, 40, 600, 300]                      // viewport (orgX, orgY, width, height)
         );
 
-        /**
-         * @todo melhorar a busca pelos arquivos da cena
-         */
-        let firstScript = new scripts.FirstScript(this.engine, this.camera);
-        let secondScript = new scripts.SecondScript(this.engine, this.camera);
-        firstScript.start();
-        secondScript.start();
+        let monoBehaviour = new MonoBehaviour(this.engine, this.camera);
 
-        /**
-         * @todo melhorar a forma como instanciar os scripts da cena
-         */
-        this.gameScripts = [firstScript, secondScript];
+        let that = this;
+        [].forEach.call(scripts, function(script: any) {
+            let obj = (new script(monoBehaviour));
+            obj.start();
+            that.gameScripts.push(obj);
+        });
 
+        this.start();
+    };
 
+    /**
+     * Start de the game loop
+     * @param scripts
+     */
+    public start () {
+        if (this.mIsLoopRunning) {
+            return;
+        }
 
         // Step A: reset frame time
         this.mPreviousTime = Date.now();

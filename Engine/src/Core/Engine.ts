@@ -36,6 +36,11 @@ export default class Engine {
     private _defaultResourcesLoader: DefaultResourcesLoader;
 
     /**
+     * Game loop Instance
+     */
+    private _gameLoop: any;
+
+    /**
      * Constructor
      * @param htmlCanvasID Canvas id on HTML Document
      */
@@ -49,6 +54,7 @@ export default class Engine {
             this._vertexBuffer,
             this._resourceMap
         );
+        this._gameLoop = new GameLoop(this);
     }
 
     /**
@@ -89,29 +95,34 @@ export default class Engine {
     /**
      * Init Game Engine
      */
-    init(scripts: any) : Engine {
+    init() : Engine {
         this._vertexBuffer.initialize();
         this._input.initialize();
-        this._defaultResourcesLoader.initialize(() => this.startScene(scripts));
+        this._defaultResourcesLoader.initialize(() => this.startScene(null));
         return this;
     };
 
     /**
      * Start the game scene
+     * Initialize the GameLoop
      * @param scripts
      */
-    startScene(scripts: any) {
-        /**
-         * initialize the GameLoop
-         */
-
-        this.changeScene(null);
-
-        // (new GameLoop(this)).start(scripts);
+    startScene(sceneName: string) {
+        this._defaultResourcesLoader.loadScene(
+            sceneName,
+            this._gameLoop
+        );
     }
 
+    /**
+     *
+     * @param sceneName
+     */
     changeScene(sceneName: string) {
-        this._defaultResourcesLoader.loadScene(sceneName);
+        this._defaultResourcesLoader.loadScene(
+            sceneName,
+            this._gameLoop
+        );
     }
 
     /**

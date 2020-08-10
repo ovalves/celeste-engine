@@ -1,14 +1,13 @@
 import { vec2, vec3, mat2, mat2d, mat3, mat4, quat, quat2 } from 'gl-matrix';
-import SimpleShader from '../Renderer/Shader/SimpleShader';
-import Renderable from '../Renderer/Object/Renderable';
-import Camera from '../Scene/Camera';
-import Input from '../Events/Input/Input';
-import Keys from '../Events/Input/Keys';
+import Renderable from '../../src/Renderer/Object/Renderable';
+import Camera from '../../src/Scene/Camera';
+import Input from '../../src/Events/Input/Input';
+import Keys from '../../src/Events/Input/Keys';
 
 /**
  * Game Engine Core Class
  */
-export default abstract class MonoBehaviour {
+export default class MonoBehaviour {
     /**
      * Engine class
      */
@@ -25,7 +24,7 @@ export default abstract class MonoBehaviour {
      * @param engine
      * @param camera
      */
-    constructor(engine: any, camera: Camera) {
+    public constructor(engine: any, camera: Camera) {
         this.engine = engine;
         this.camera = camera;
     }
@@ -127,8 +126,4 @@ export default abstract class MonoBehaviour {
     public getQuaternion2() : Object {
         return quat2;
     }
-
-    abstract start() : void;
-    abstract update() : void;
-    abstract draw() : void;
 }

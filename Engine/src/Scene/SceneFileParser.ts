@@ -7,27 +7,26 @@ export default class SceneFileParser {
     private _resourceMap: any;
 
     /**
-     * DefaultResourcesLoader Instance
-     */
-    private _textFileLoader: any;
-
-    /**
-     *
+     * Dados do arquivo XML da cena
      */
     private sceneXmlDocument: XMLDocument;
 
     /**
-     *
-     * @param defaultResourcesLoader
-     * @param resourceMap
+     * Scripts carregados presentes na cena
      */
-    constructor(resourceMap: any, textFileLoader: any) {
+    private loadedScripts: Array<number|Object> = [];
+
+    /**
+     * Constructor
+     * @param resourceMap
+     * @param textFileLoader
+     */
+    constructor(resourceMap: any) {
         this._resourceMap = resourceMap;
-        this._textFileLoader = textFileLoader;
     }
 
     /**
-     *
+     * Retorna o elemento presente no XML da cena
      * @param tagElm
      */
     private getElm (tagElm: string) {
@@ -40,34 +39,32 @@ export default class SceneFileParser {
     };
 
     /**
-     *
+     *  Retorna os script presentes na cena
      * @param sceneName
      */
-    public parse(sceneName: string) {
+    public getLoadedScripts() : Array<number|Object> {
+        return this.loadedScripts;
+    }
+
+    /**
+     * Parseia os dados do arquivo XML da cena
+     * @param sceneName
+     */
+    public parse(sceneName: string) : void {
         this.sceneXmlDocument = this._resourceMap.retrieveAsset(sceneName);
         this.parseScripts();
     }
 
+    /**
+     * Parseia os dados dos scripts no arquivo de XML da cena
+     */
     public parseScripts() {
         let scriptElm = this.getElm("script");
-        let src = scriptElm[0].getAttribute("src");
-        let clas = scriptElm[0].getAttribute("class");
-
-        const file = require(path.join(__dirname, '../../', src));
-        console.log(file.teste.draw());
-
-        /**
-         * Carregando o arquivo js por ajax
-         */
-        // this._textFileLoader.loadTextFile(
-        //     src,
-        //     1,
-        //     () => this.instantiateScriptClass(src, clas)
-        // );
-    }
-
-    private instantiateScriptClass(src: any, clas: any) {
-        const Customer2 = require(path.join(__dirname, '../../', src));
+        for (let index = 0; index < scriptElm.length; index++) {
+            let src = scriptElm[index].getAttribute("src");
+            let script = require(path.join(__dirname, '../../', src));
+            this.loadedScripts.push(script);
+        }
     }
 
     // public parseCamera() {
@@ -76,12 +73,12 @@ export default class SceneFileParser {
     //     let cy = Number(camElm[0].getAttribute("CenterY"));
     //     let w = Number(camElm[0].getAttribute("Width"));
     //     let viewport = camElm[0].getAttribute("Viewport").split(" ");
-    //     let bgColor = camElm[0].getAttribute("BgColor").split(" ");
+    //     let bgColor: Array<string> = camElm[0].getAttribute("BgColor").split(" ");
     //     // make sure viewport and color are number
     //     let j;
 
     //     for (j = 0; j < 4; j++) {
-    //         let bgColor[j]: Array<number> = Number(bgColor[j]);
+    //         let bgColor[j]: Array<string> = Number(bgColor[j]);
     //         viewport[j] = Number(viewport[j]);
     //     }
 
