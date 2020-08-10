@@ -38,7 +38,7 @@ export default class DefaultResourcesLoader {
 
         this.resourceLoader = new ResourceLoader(this._resourceMap);
         this.textFileLoader = new TextFileLoader(this._resourceMap, this.resourceLoader);
-        this._sceneFileParser = new SceneFileParser(this._resourceMap, this.textFileLoader);
+        this._sceneFileParser = new SceneFileParser(this._resourceMap);
     }
 
     /**
@@ -77,15 +77,18 @@ export default class DefaultResourcesLoader {
         this.textFileLoader.loadTextFile(
             this.kSimpleVS,
             this.resourceLoader.MAPPED_FILE_TYPE.TEXT_FILE,
-            () => console.log('loaded')
+            () => console.log('loading simple vertex shader')
         );
 
         this.textFileLoader.loadTextFile(
             this.kSimpleFS,
             this.resourceLoader.MAPPED_FILE_TYPE.TEXT_FILE,
-            () => console.log('loaded')
+            () => console.log('loading simple fragment shader')
         );
 
+        /**
+         * @todo checar se o carregamento terminou antes de criar os programas de shader
+         */
         this._resourceMap.setLoadCompleteCallback(() => this.createShaders(callBackFunction));
     }
 

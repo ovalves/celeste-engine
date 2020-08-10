@@ -109,22 +109,25 @@ export default class GameLoop {
         );
 
         let monoBehaviour = new MonoBehaviour(this.engine, this.camera);
-
         let that = this;
-        [].forEach.call(scripts, function(script: any) {
-            let obj = (new script(monoBehaviour));
-            obj.start();
-            that.gameScripts.push(obj);
-        });
 
-        this.start();
+        this.engine.getResourceMap().setLoadCompleteCallback(
+            function () {
+                [].forEach.call(scripts, function(script: any) {
+                    let obj = (new script(monoBehaviour));
+                    obj.start();
+                    that.gameScripts.push(obj);
+                });
+                that._startLoop();
+            }
+        );
     };
 
     /**
      * Start de the game loop
      * @param scripts
      */
-    public start () {
+    public _startLoop () {
         if (this.mIsLoopRunning) {
             return;
         }

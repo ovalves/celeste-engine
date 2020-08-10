@@ -79,17 +79,24 @@ export default class Engine {
     }
 
     /**
-     * Accessor of the Camera Viewport object
+     * Accessor of the Input Manager object
      */
     public getInput() : Input {
         return this._input;
     }
 
     /**
-     *
+     * Accessor of the Shader object
      */
     public getShader() {
         return this._defaultResourcesLoader.getShader();
+    }
+
+    /**
+     * Accessor of the ResourceMap object
+     */
+    public getResourceMap() : ResourceMap {
+        return this._resourceMap;
     }
 
     /**
