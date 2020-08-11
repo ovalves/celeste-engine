@@ -20,30 +20,13 @@ class SecondScript {
          *          - A game engine irá criar, carregar e compilar os programas dos shaders internamente
          */
         // let shader = this.getColorShader();
-        let shader = this.monoBehaviour.getShader();
-
-        /**
-         * Criando 2 instancias da classe de criação de game object
-         */
-        let renderGameObject2 = this.monoBehaviour.getRenderable();
-
-            /**
-         * Alterando a cor dos shaders e criando 6 instancias de game object
-         */
-        this.gameObject2 = renderGameObject2.createObject(shader).setColor([1, 0, 0, 1]);
-
-        /**
-         * Alterando a cor dos shaders e criando 6 instancias de game object
-         */
-        // Step  E: Initialize the red Renderable object: centered 2x2
-        this.gameObject2.getTransform().position().setPosition(20, 60);
-        this.gameObject2.getTransform().scale().setSize(2, 2);
+        this.gameObject2 = this.monoBehaviour.getGameObject('obj2');
     }
 
     draw() {
 
         // Step  D: Activate the red shader to draw
-        this.gameObject2.draw(this.monoBehaviour.getCamera().getVPMatrix());
+        this.gameObject2.draw(this.monoBehaviour.getMainCamera().getVPMatrix());
     }
 
     update() {

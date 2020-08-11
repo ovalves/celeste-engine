@@ -9,7 +9,7 @@ export default class Camera {
     /**
      * Is a vec2 of the center of the World Coordinate Viewport
      */
-    private mWCCenter: Array<number>;
+    private mWCCenter: any;
 
     /**
      * Is the width of the user defined World Coordinate
@@ -35,7 +35,7 @@ export default class Camera {
         this.webGL  = <WebGLRenderingContext> webGL;
     }
 
-    create(wcCenter: Array<number>, wcWidth: number, viewportArray: Array<number>) {
+    create(wcCenter: any, wcWidth: number, viewportArray: Array<number>) {
         // World Coordinate and viewport position and size
         this.mWCCenter = wcCenter;
         this.mWCWidth = wcWidth;

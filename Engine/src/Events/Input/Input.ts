@@ -53,6 +53,7 @@ export default class Input {
         for (var [key, value] of Object.entries(this.keys.getKeys())) {
             if (key == searchedKey) {
                 found = value;
+                break;
             }
         }
 

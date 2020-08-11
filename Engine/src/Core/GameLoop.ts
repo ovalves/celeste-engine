@@ -81,7 +81,11 @@ export default class GameLoop {
             this.engine.clearCanvas([0.9, 0.9, 0.9, 1]);
 
             // Step  B: Activate the drawing Camera
-            this.camera.setupViewProjection();
+            /**
+             * @todo setando a projeção de view apenas para a camera primária
+             * @todo a projeção de view deve ser setada para todas as cameras
+             */
+            this.camera[0].setupViewProjection();
 
             /**
              * call game scripts draw method
@@ -96,21 +100,14 @@ export default class GameLoop {
      * Carrega os arquivos presentes na cena
      * @param scripts
      */
-    public loadScripts (scripts: any) {
-        /**
-         * @todo melhorar a forma de criar a camera da cena
-         * @todo a criação da camera deve pertencer a classe da cena
-         * @todo a camera deve ser passada como parametro para os game objects
-         */
-        this.camera = this.engine.getCamera().create(
-            vec2.fromValues(20, 60),                // center of the WC
-            20,                                     // width of WC
-            [20, 40, 600, 300]                      // viewport (orgX, orgY, width, height)
-        );
+    public loadScripts (scripts: Object, cameras: any, sceneGameObject: Array<Object>) {
+        if (!cameras) {
+            return;
+        }
 
-        let monoBehaviour = new MonoBehaviour(this.engine, this.camera);
+        this.camera = [...cameras];
+        let monoBehaviour = new MonoBehaviour(this.engine, this.camera, sceneGameObject);
         let that = this;
-
         this.engine.getResourceMap().setLoadCompleteCallback(
             function () {
                 [].forEach.call(scripts, function(script: any) {

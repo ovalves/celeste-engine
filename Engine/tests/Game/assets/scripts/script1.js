@@ -19,30 +19,14 @@ class FirstScript {
          *      - Passos executados pela game engine ao adicionar novos shaders
          *          - A game engine irá criar, carregar e compilar os programas dos shaders internamente
          */
-        // let shader = this.getColorShader();
-        let shader = this.monoBehaviour.getShader();
-
-        /**
-         * Criando 2 instancias da classe de criação de game object
-         */
-        let renderGameObject1 = this.monoBehaviour.getRenderable();
-
-        /**
-         * Alterando a cor dos shaders e criando 6 instancias de game object
-         */
-        this.gameObject1 = renderGameObject1.createObject(shader).setColor([1, 1, 1, 1]);
-
-        this.gameObject1.getTransform().position().setPosition(20, 60);
-        this.gameObject1.getTransform().rotation().setRotationInRad(0.2); // In Radians
-        this.gameObject1.getTransform().scale().setSize(5, 5);
+        this.gameObject1 = this.monoBehaviour.getGameObject('obj1');
     }
 
     /**
      *
      */
     draw() {
-        // Step  C: Activate the white shader to draw
-        this.gameObject1.draw(this.monoBehaviour.getCamera().getVPMatrix());
+        this.gameObject1.draw(this.monoBehaviour.getMainCamera().getVPMatrix());
     }
 
     /**

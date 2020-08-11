@@ -11,9 +11,6 @@ export default class DefaultResourcesLoader {
     private _resourceMap: ResourceMap;
     private resourceLoader: ResourceLoader;
     private textFileLoader: TextFileLoader;
-    /**
-     * SceneFileParser Instance
-     */
     private _sceneFileParser: SceneFileParser;
 
     /**
@@ -38,7 +35,7 @@ export default class DefaultResourcesLoader {
 
         this.resourceLoader = new ResourceLoader(this._resourceMap);
         this.textFileLoader = new TextFileLoader(this._resourceMap, this.resourceLoader);
-        this._sceneFileParser = new SceneFileParser(this._resourceMap);
+        this._sceneFileParser = new SceneFileParser(this._webGL, this._resourceMap);
     }
 
     /**
@@ -95,6 +92,7 @@ export default class DefaultResourcesLoader {
     /**
      * Loads the scene file by name
      * @param sceneName
+     * @param gameLoop
      */
     loadScene (sceneName: string, gameLoop: any) {
         if (!sceneName) {
@@ -109,10 +107,24 @@ export default class DefaultResourcesLoader {
     }
 
     /**
-     *
+     * Retorna os scripts presentes na cena
      */
     public getLoadedScripts() : Array<number|Object> {
         return this._sceneFileParser.getLoadedScripts();
+    }
+
+    /**
+     * Retorna as cameras presentes na cena
+     */
+    public getLoadedCameras() : Array<number|Object> {
+        return this._sceneFileParser.getLoadedCameras();
+    }
+
+    /**
+     * Retorna os game objects presentes na cena
+     */
+    public getLoadedGameObjects() : Array<Object> {
+        return this._sceneFileParser.getLoadedGameObjects();
     }
 
     /**
@@ -123,7 +135,14 @@ export default class DefaultResourcesLoader {
             return;
         }
 
-        this._sceneFileParser.parse(sceneName);
-        gameLoop.loadScripts(this.getLoadedScripts());
+        this._sceneFileParser
+            .setDefaultShader(this.getShader())
+            .parse(sceneName);
+
+        gameLoop.loadScripts(
+            this.getLoadedScripts(),
+            this.getLoadedCameras(),
+            this.getLoadedGameObjects()
+        );
     }
 }

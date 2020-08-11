@@ -1,6 +1,15 @@
+import { vec2 } from 'gl-matrix';
+
 import * as path from 'path'
+import Camera from './Camera';
+import Renderable from '../Renderer/Object/Renderable';
 
 export default class SceneFileParser {
+    /**
+     * WebGL Instance
+     */
+    private _webGL: WebGLRenderingContext;
+
     /**
      * ResourceMap Instance
      */
@@ -17,33 +26,72 @@ export default class SceneFileParser {
     private loadedScripts: Array<number|Object> = [];
 
     /**
-     * Constructor
-     * @param resourceMap
-     * @param textFileLoader
+     * Cameras presentes na cena
      */
-    constructor(resourceMap: any) {
+    private loadedCameras: Array<number|Object> = [];
+
+    /**
+     * Cameras presentes na cena
+     */
+    private loadedGameObjects: any = [];
+
+    /**
+     * Object shader padrão
+     */
+    private _shader: any;
+
+    /**
+     * Constructor
+     * @param webGL
+     * @param resourceMap
+     */
+    constructor(webGL: WebGLRenderingContext, resourceMap: any) {
+        this._webGL = webGL;
         this._resourceMap = resourceMap;
     }
 
     /**
      * Retorna o elemento presente no XML da cena
-     * @param tagElm
+     * @param sceneElement
      */
-    private getElm (tagElm: string) {
-        let theElm = this.sceneXmlDocument.getElementsByTagName(tagElm);
-        if (theElm.length === 0) {
-            console.error("Warning: Level element:[" + tagElm + "]: is not found!");
+    private getSceneElement (sceneElement: string) {
+        let element = this.sceneXmlDocument.getElementsByTagName(sceneElement);
+        if (element.length === 0) {
+            console.error("Warning: Level element:[" + sceneElement + "]: is not found!");
         }
 
-        return theElm;
+        return element;
     };
 
     /**
-     *  Retorna os script presentes na cena
-     * @param sceneName
+     *  Retorna os scripts presentes na cena
      */
     public getLoadedScripts() : Array<number|Object> {
         return this.loadedScripts;
+    }
+
+    /**
+     * Retorna as cameras presentes na cena
+     */
+    public getLoadedCameras() : Array<number|Object> {
+        return this.loadedCameras;
+    }
+
+    /**
+     * Retorna os game objects presentes na cena
+     */
+    public getLoadedGameObjects() : any {
+        return this.loadedGameObjects;
+    }
+
+    /**
+     * Seta o shader padrão para a criação dos game objects
+     * @param shader
+     * @returns self
+     */
+    public setDefaultShader(shader: any) : this {
+        this._shader = shader;
+        return this;
     }
 
     /**
@@ -53,64 +101,90 @@ export default class SceneFileParser {
     public parse(sceneName: string) : void {
         this.sceneXmlDocument = this._resourceMap.retrieveAsset(sceneName);
         this.parseScripts();
+        this.parseCamera();
+        this.parseSquares();
     }
 
     /**
      * Parseia os dados dos scripts no arquivo de XML da cena
      */
     public parseScripts() {
-        let scriptElm = this.getElm("script");
-        for (let index = 0; index < scriptElm.length; index++) {
-            let src = scriptElm[index].getAttribute("src");
+        let scripts = this.getSceneElement("script");
+        if (scripts.length < 1) {
+            return;
+        }
+        for (let index = 0; index < scripts.length; index++) {
+            let src = scripts[index].getAttribute("src");
             let script = require(path.join(__dirname, '../../', src));
             this.loadedScripts.push(script);
         }
     }
 
-    // public parseCamera() {
-    //     let camElm = this.getElm("Camera");
-    //     let cx = Number(camElm[0].getAttribute("CenterX"));
-    //     let cy = Number(camElm[0].getAttribute("CenterY"));
-    //     let w = Number(camElm[0].getAttribute("Width"));
-    //     let viewport = camElm[0].getAttribute("Viewport").split(" ");
-    //     let bgColor: Array<string> = camElm[0].getAttribute("BgColor").split(" ");
-    //     // make sure viewport and color are number
-    //     let j;
+    /**
+     * Parseia os dados das cameras no arquivo de XML da cena
+     */
+    public parseCamera() {
+        let cameras = this.getSceneElement("Camera");
+        if (cameras.length < 1) {
+            return;
+        }
+        for (let index = 0; index < cameras.length; index++) {
+            let cx: number = Number(cameras[index].getAttribute("CenterX"));
+            let cy: number = Number(cameras[index].getAttribute("CenterY"));
+            let w = Number(cameras[index].getAttribute("Width"));
+            let viewport: Array<number>|Array<string> = cameras[index].getAttribute("Viewport").split(",");
+            let bgColor: Array<number>|Array<string> = cameras[index].getAttribute("BgColor").split(",");
 
-    //     for (j = 0; j < 4; j++) {
-    //         let bgColor[j]: Array<string> = Number(bgColor[j]);
-    //         viewport[j] = Number(viewport[j]);
-    //     }
+            bgColor = bgColor.map(Number);
+            viewport = viewport.map(Number);
 
-    //     let camera = new Camera(
-    //         vec2.fromValues(cx, cy),  // position of the camera
-    //         w,                        // width of camera
-    //         viewport                  // viewport (orgX, orgY, width, height)
-    //     );
-    //     camera.setBackgroundColor(bgColor);
-    //     return camera;
-    // };
+            let camera = new Camera(this._webGL);
+            camera.create(
+                vec2.fromValues(cx, cy),
+                w,
+                viewport
+            )
 
-    // parseSquares(sqSet) {
-    //     var elm = this.getElm("Square");
-    //     var i, j, x, y, w, h, r, c, sq;
-    //     for (i = 0; i < elm.length; i++) {
-    //         x = Number(elm.item(i).attributes.getNamedItem("PosX").value);
-    //         y = Number(elm.item(i).attributes.getNamedItem("PosY").value);
-    //         w = Number(elm.item(i).attributes.getNamedItem("Width").value);
-    //         h = Number(elm.item(i).attributes.getNamedItem("Height").value);
-    //         r = Number(elm.item(i).attributes.getNamedItem("Rotation").value);
-    //         c = elm.item(i).attributes.getNamedItem("Color").value.split(" ");
-    //         sq = new Renderable(gEngine.DefaultResources.getConstColorShader());
-    //         // make sure color array contains numbers
-    //         for (j = 0; j < 4; j++) {
-    //             c[j] = Number(c[j]);
-    //         }
-    //         sq.setColor(c);
-    //         sq.getXform().setPosition(x, y);
-    //         sq.getXform().setRotationInDegree(r); // In Degree
-    //         sq.getXform().setSize(w, h);
-    //         sqSet.push(sq);
-    //     }
-    // };
+            camera.setBackgroundColor(bgColor);
+            this.loadedCameras.push(camera);
+        }
+    };
+
+    /**
+     * Parseia os dados de game object do tipo square no arquivo de XML da cena
+     */
+    parseSquares() {
+        let squares = this.getSceneElement("Square");
+        if (squares.length < 1) {
+            return;
+        }
+
+        let gameObjectName : string,
+            posX : number,
+            posY : number,
+            width : number,
+            height : number,
+            rotation : number,
+            color : Array<number>|Array<string>,
+            square : Renderable;
+
+        for (let i = 0; i < squares.length; i++) {
+            gameObjectName = String(squares.item(i).attributes.getNamedItem("name").value);
+            posX = Number(squares.item(i).attributes.getNamedItem("PosX").value);
+            posY = Number(squares.item(i).attributes.getNamedItem("PosY").value);
+            width = Number(squares.item(i).attributes.getNamedItem("Width").value);
+            height = Number(squares.item(i).attributes.getNamedItem("Height").value);
+            rotation = Number(squares.item(i).attributes.getNamedItem("Rotation").value);
+            color = squares.item(i).attributes.getNamedItem("Color").value.split(",");
+
+            square = (new Renderable(this._webGL)).createObject(this._shader);
+            color = color.map(Number);
+            square.setColor(color);
+            square.getTransform().position().setPosition(posX, posY);
+            square.getTransform().rotation().setRotationInDegree(rotation);
+            square.getTransform().scale().setSize(width, height);
+
+            this.loadedGameObjects[gameObjectName] = square;
+        }
+    };
 }

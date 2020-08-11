@@ -14,19 +14,26 @@ export default class MonoBehaviour {
     private engine: any = null;
 
     /**
-     * The camera to view the scene
+     * The cameras of the view scene
      */
-    private camera: Camera = null;
+    private cameras: Array<Object> = [];
+
+    /**
+     * The cameras of the view scene
+     */
+    private sceneGameObject: any = {};
 
     /**
      * Constructor
      *
      * @param engine
-     * @param camera
+     * @param cameras
+     * @param sceneGameObject
      */
-    public constructor(engine: any, camera: Camera) {
+    public constructor(engine: any, cameras: Array<Object>, sceneGameObject: any) {
         this.engine = engine;
-        this.camera = camera;
+        this.cameras = cameras;
+        this.sceneGameObject = sceneGameObject;
     }
 
     /**
@@ -51,10 +58,36 @@ export default class MonoBehaviour {
     }
 
     /**
+     * Accessor of the renderable object
+     */
+    public getGameObject(objectName: string) : void {
+        if (!objectName) {
+            return;
+        }
+
+        let found: any = null;
+        for (var [key, value] of Object.entries(this.sceneGameObject)) {
+            if (key === objectName) {
+                found = value;
+                break;
+            }
+        }
+
+        return found;
+    }
+
+    /**
      * Accessor of the Camera Viewport object
      */
-    public getCamera() : Camera {
-        return this.camera;
+    public getMainCamera() : Object {
+        return this.cameras[0];
+    }
+
+    /**
+     * Accessor of the Camera Viewport object
+     */
+    public getCameras() : Object {
+        return this.cameras;
     }
 
     /**
