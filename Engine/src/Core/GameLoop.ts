@@ -1,5 +1,3 @@
-import { vec2 } from 'gl-matrix';
-
 import MonoBehaviour from './MonoBehaviour';
 
 export default class GameLoop {

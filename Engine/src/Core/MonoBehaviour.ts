@@ -85,6 +85,29 @@ export default class MonoBehaviour {
     }
 
     /**
+    *
+    */
+    public getAudio() {
+        return this.engine.getAudio();
+    }
+
+    /**
+    *
+    * @param audioName
+    */
+    public playBackgroundAudio(audioName: string) {
+        this.engine.getAudio().playBackgroundAudio(audioName);
+    }
+
+    /**
+    *
+    * @param audioName
+    */
+    public playAudioTrack(audioName: string) {
+        this.engine.getAudio().playAudioTrack(audioName);
+    }
+
+    /**
      * Accessor of the Camera Viewport object
      */
     public getMainCamera() : Object {

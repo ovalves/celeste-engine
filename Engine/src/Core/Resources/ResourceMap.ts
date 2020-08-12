@@ -1,8 +1,18 @@
 class MapEntry {
     private mAsset: any = null;
+    private mRefCount: number = 1;
 
     constructor(rName: string) {
         this.mAsset = rName;
+        this.mRefCount = 1;
+    }
+
+    public incAssetRefCount() {
+        this.mRefCount += 1;
+    }
+
+    public getIncAssetRefCount() {
+        return this.mRefCount;
     }
 
     public getAsset() {
@@ -96,6 +106,14 @@ export default class ResourceMap {
      */
     public isAssetLoaded(rName: string) {
         return (rName in this.mResourceMap);
+    };
+
+    /**
+     *
+     * @param rName
+     */
+    public incAssetRefCount(rName: string) {
+        this.mResourceMap[rName].incAssetRefCount();
     };
 
     /**

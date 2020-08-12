@@ -6,6 +6,7 @@ import SceneManager from '../Scene/SceneManager';
 import Input from '../Events/Input/Input';
 import DefaultResourcesLoader from './Resources/DefaultResourcesLoader';
 import ResourceMap from './Resources/ResourceMap';
+import AudioManager from '../Audio/AudioManager';
 
 /**
  * Game Engine Core Class
@@ -47,6 +48,11 @@ export default class Engine {
     private _sceneManager: any;
 
     /**
+     * Audio Manager Instance
+     */
+    private _audioManager: any;
+
+    /**
      * Constructor
      * @param htmlCanvasID Canvas id on HTML Document
      */
@@ -60,6 +66,7 @@ export default class Engine {
             this._vertexBuffer,
             this._resourceMap
         );
+        this._audioManager = new AudioManager(this._resourceMap);
         this._sceneManager = new SceneManager(this._webGL, this._defaultResourcesLoader);
         this._gameLoop = new GameLoop(this);
     }
@@ -112,6 +119,7 @@ export default class Engine {
     init() : Engine {
         this._vertexBuffer.initialize();
         this._input.initialize();
+        this._sceneManager.setAudioManager(this._audioManager);
         this._defaultResourcesLoader.initialize(() => this.startScene(null));
         return this;
     };
@@ -138,6 +146,13 @@ export default class Engine {
             sceneName,
             this._gameLoop
         );
+    }
+
+    /**
+    * Return the audio manager instance
+    */
+    public getAudio() : AudioManager {
+        return this._audioManager;
     }
 
     /**

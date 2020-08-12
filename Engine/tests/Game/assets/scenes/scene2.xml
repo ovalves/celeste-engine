@@ -11,6 +11,9 @@
     <!-- Viewport: x, y, w, h -->
     <Camera CenterX="20" CenterY="60" Width="20" Viewport="20, 40, 600, 300" BgColor="0.2, 0.6, 1, 1"/>
 
+    <Audio src="../tests/Game/assets/sounds/BGClip.mp3" />
+    <Audio src="../tests/Game/assets/sounds/MyGame_cue.wav" />
+
     <!-- Squares Rotation is in degree -->
     <Square name="obj3" PosX="20" PosY="60" Width="5" Height="5" Rotation="30" Color="0.3, 0.55, 0.75, 1" />
     <Square name="obj4" PosX="20" PosY="60" Width="3" Height="2" Rotation="0"  Color="1, 0.49, 0.33, 1" />

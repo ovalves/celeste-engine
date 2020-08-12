@@ -4,11 +4,14 @@
 class Player {
     constructor(MonoBehaviour) {
         this.gameObject1 = null;
+        this.kBgClip = "../tests/Game/assets/sounds/BGClip.mp3";
+        this.kCue = "../tests/Game/assets/sounds/MyGame_cue.wav";
         this.monoBehaviour = MonoBehaviour;
     }
 
     start() {
         this.gameObject1 = this.monoBehaviour.getGameObject('obj3');
+        this.monoBehaviour.playBackgroundAudio(this.kCue);
     }
 
     /**
@@ -36,6 +39,7 @@ class Player {
         const changeScene = this.monoBehaviour.getInput().getKey(this.monoBehaviour.key().SPACE);
 
         if (this.monoBehaviour.getInput().isKeyPressed(RIGHT)) {
+            this.monoBehaviour.playAudioTrack(this.kBgClip);
             if (transformGameObject1.position().getXPos() > 30) {
                 transformGameObject1.position().setPosition(10, 60);
             }

@@ -5,6 +5,8 @@
 class FirstScript {
     constructor(MonoBehaviour) {
         this.gameObject1 = null;
+        this.kBgClip = "../tests/Game/assets/sounds/BGClip.mp3";
+        this.kCue = "../tests/Game/assets/sounds/MyGame_cue.wav";
         this.monoBehaviour = MonoBehaviour;
     }
 
@@ -20,6 +22,7 @@ class FirstScript {
          *          - A game engine irá criar, carregar e compilar os programas dos shaders internamente
          */
         this.gameObject1 = this.monoBehaviour.getGameObject('obj1');
+        this.monoBehaviour.playBackgroundAudio(this.kBgClip);
     }
 
     /**
@@ -47,6 +50,7 @@ class FirstScript {
         const changeScene = this.monoBehaviour.getInput().getKey(this.monoBehaviour.key().SPACE);
 
         if (this.monoBehaviour.getInput().isKeyPressed(RIGHT)) {
+            this.monoBehaviour.playAudioTrack(this.kCue);
             if (transformGameObject1.position().getXPos() > 30) {
                 transformGameObject1.position().setPosition(10, 60);
             }

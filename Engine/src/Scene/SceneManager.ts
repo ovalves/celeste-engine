@@ -1,9 +1,11 @@
 import DefaultResourcesLoader from '../Core/Resources/DefaultResourcesLoader';
 import SceneFileParser from './SceneFileParser';
+import AudioManager from '../Audio/AudioManager';
 
 export default class SceneManager {
     private _webGL: WebGLRenderingContext;
     private resourcesLoader: any;
+    private audioManager: AudioManager;
     private _sceneFileParser: SceneFileParser;
 
     private mainSceneFile: string;
@@ -17,6 +19,15 @@ export default class SceneManager {
         this.mainSceneFile = "../tests/Game/assets/scenes/scene.xml"; // Path to the main game scene
         this._webGL = webGL;
         this.resourcesLoader = resourcesLoader;
+    }
+
+    /**
+     *
+     * @param audioManager
+     */
+    public setAudioManager(audioManager: AudioManager) : this {
+        this.audioManager = audioManager;
+        return this;
     }
 
     /**
@@ -42,6 +53,10 @@ export default class SceneManager {
      * Unload scene
      */
     public unloadScene () {
+        if (typeof this._sceneFileParser !== 'undefined') {
+            this.audioManager.unloadAudios(this._sceneFileParser.getLoadedAudios());
+        }
+
         this._sceneFileParser = new SceneFileParser(
             this._webGL,
             this.resourcesLoader.getResourceMap()
@@ -79,6 +94,7 @@ export default class SceneManager {
 
         this._sceneFileParser
             .setDefaultShader(this.resourcesLoader.getShader())
+            .setAudioManager(this.audioManager)
             .parse(sceneName);
 
         gameLoop.loadScripts(

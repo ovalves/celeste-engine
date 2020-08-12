@@ -26,6 +26,11 @@ export default class SceneFileParser {
     private loadedScripts: Array<number|Object> = [];
 
     /**
+     * Audios carregados presentes na cena
+     */
+    private loadedAudio: Array<string> = [];
+
+    /**
      * Cameras presentes na cena
      */
     private loadedCameras: Array<number|Object> = [];
@@ -39,6 +44,11 @@ export default class SceneFileParser {
      * Object shader padrão
      */
     private _shader: any;
+
+    /**
+     *
+     */
+    private audioManager: any;
 
     /**
      * Constructor
@@ -71,6 +81,13 @@ export default class SceneFileParser {
     }
 
     /**
+     *  Retorna os audios presentes na cena
+     */
+    public getLoadedAudios() : Array<string> {
+        return this.loadedAudio;
+    }
+
+    /**
      * Retorna as cameras presentes na cena
      */
     public getLoadedCameras() : Array<number|Object> {
@@ -95,12 +112,22 @@ export default class SceneFileParser {
     }
 
     /**
+     *
+     * @param audioManager
+     */
+    public setAudioManager(audioManager: any) : this {
+        this.audioManager = audioManager;
+        return this;
+    }
+
+    /**
      * Parseia os dados do arquivo XML da cena
      * @param sceneName
      */
     public parse(sceneName: string) : void {
         this.sceneXmlDocument = this._resourceMap.retrieveAsset(sceneName);
         this.parseScripts();
+        this.parseAudio();
         this.parseCamera();
         this.parseSquares();
     }
@@ -111,12 +138,28 @@ export default class SceneFileParser {
     public parseScripts() {
         let scripts = this.getSceneElement("script");
         if (scripts.length < 1) {
-            return;
+            return this.getLoadedAudios();
         }
         for (let index = 0; index < scripts.length; index++) {
             let src = scripts[index].getAttribute("src");
             let script = require(path.join(__dirname, '../../', src));
             this.loadedScripts.push(script);
+        }
+    }
+
+    /**
+     * Parseia os dados dos scripts no arquivo de XML da cena
+     */
+    public parseAudio() {
+        let audio = this.getSceneElement("Audio");
+        if (audio.length < 1) {
+            return;
+        }
+
+        for (let index = 0; index < audio.length; index++) {
+            let src = audio[index].getAttribute("src");
+            this.audioManager.loadAudio(src);
+            this.loadedAudio.push(src);
         }
     }
 
