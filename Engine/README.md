@@ -1,45 +1,179 @@
-# electron-quick-start
+# V-Engine
 
-**Clone and run for a quick way to see Electron in action.**
+<!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and licence info here --->
+![GitHub repo size](https://img.shields.io/github/repo-size/ovalves/selene)
+![GitHub contributors](https://img.shields.io/github/contributors/ovalves/selene)
+![GitHub stars](https://img.shields.io/github/stars/ovalves/selene?style=social)
+![GitHub forks](https://img.shields.io/github/forks/ovalves/selene?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/v1ndite?style=social)
 
-This is a minimal Electron application based on the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start) within the Electron documentation.
+Project name is a `<utility/tool/feature>` that allows `<insert_target_audience>` to do `<action/task_it_does>`.
 
-**Use this app along with the [Electron API Demos](https://electronjs.org/#get-started) app for API code examples to help you get started.**
+This is a minimal Game Engine based on the [Build your own 2d game engine](https://github.com/apress/build-your-own-2d-game-engine) using the Electron.
 
-A basic Electron application needs just these files:
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+<!--- These are just example requirements. Add, duplicate or remove as required --->
+* To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+
+## Installing <project_name>
+
+To install <project_name>, follow these steps:
+
+```bash
+# Clone this repository
+git clone https://github.com/vengine/vengine-quick-start
+# Go into the repository
+cd vengine-quick-start
+# Install dependencies
+npm install
+# Run the app
+npm run start
+```
+
+## Using <project_name>
+
+A basic game made with the V-Engine needs just these files:
 
 - `package.json` - Points to the app's main file and lists its details and dependencies.
 - `main.js` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
 - `index.html` - A web page to render. This is the app's **renderer process**.
 
-You can learn more about each of these components within the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start).
+To use <project_name>, follow these steps:
 
-## To Use
+## How to Use
+### Simple Game engine script class
+- `constructor(MonoBehaviour)`
+- `start()`
+- `draw()`
+- `update()`
+```js
+class FirstScript {
+    /**
+     * Recebe por padrão uma classe com todos métodos da engine
+     *
+     * @param MonoBehaviour
+     */
+    constructor(MonoBehaviour) {
+        this.gameObject1 = null;
+        this.kBgClip = "../tests/Game/assets/sounds/BGClip.mp3";
+        this.kCue = "../tests/Game/assets/sounds/MyGame_cue.wav";
+        this.monoBehaviour = MonoBehaviour;
+    }
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+    /**
+     * Executado sempre que o game object linkado a este script é instanciado na cena
+     */
+    start() {
+        this.gameObject1 = this.monoBehaviour.getGameObject('OBJECT_NAME');
+    }
 
-```bash
-# Clone this repository
-git clone https://github.com/electron/electron-quick-start
-# Go into the repository
-cd electron-quick-start
-# Install dependencies
-npm install
-# Run the app
-npm start
+    /**
+     * Executado pelo gameloop a frame a frame
+     */
+    draw() {
+        // Pssando a camera principal da cena para desenhar o objeto
+        this.gameObject1.draw(this.monoBehaviour.getMainCamera().getVPMatrix());
+    }
+
+    /**
+     * Executado pelo gameloop a frame a frame
+     */
+    update() {
+        // Game Logic
+    }
+}
 ```
 
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+# MonoBehaviour Methods
+- getRenderable() : Renderable
+    * setColor(color: Array<number>) : Renderable
+    * getColor() : Array<number>
+    * createObject(shader : any) : Renderable
+    * draw(vpMatrix: Array<number>) : void
+    * getTransform() : Transform
+        * position()
+            * setPosition(xPos: number, yPos: number)
+            * getPosition()
+            * setXPos(xPos: number)
+            * getXPos()
+            * incXPosBy(delta: number)
+            * getYPos()
+            * setYPos(yPos: number)
+            * incYPosBy(delta: number)
+        * rotation()
+            * setRotationInRad(rotationInRadians: number)
+            * setRotationInDegree(rotationInDegree: number)
+            * incRotationByDegree(deltaDegree: number)
+            * incRotationByRad(deltaRad: number)
+            * getRotationInRad()
+            * getRotationInDegree()
 
-## Resources for Learning Electron
+        * scale()
+            * setSize(width: number, height: number)
+            * getSize()
+            * incSizeBy(delta: number)
+            * getWidth()
+            * setWidth(width: number)
+            * incWidthBy(delta: number)
+            * getHeight()
+            * setHeight(height: number)
+            * incHeightBy(delta: number)
+* getShader()
+* getGameObject(objectName: string)
+* changeScene(sceneName: string)
+* getAudio()
+* playBackgroundAudio(audioName: string)
+* playAudioTrack(audioName: string)
+* getMainCamera()
+* getCameras()
+* getInput()
+    * isKeyPressed(keyCode: any)
+    * isKeyClicked(keyCode: any)
+    * getKey(searchedKey: string)
+* key()
+* getVector2()
+* getVector3()
+* getMatrix2()
+* getMatrix2D()
+* getMatrix3()
+* getMatrix4()
+* getQuaternion()
+* getQuaternion2()
 
-- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
-- [electronjs.org/community#boilerplates](https://electronjs.org/community#boilerplates) - sample starter apps created by the community
-- [electron/electron-quick-start](https://github.com/electron/electron-quick-start) - a very basic starter Electron app
-- [electron/simple-samples](https://github.com/electron/simple-samples) - small applications with ideas for taking them further
-- [electron/electron-api-demos](https://github.com/electron/electron-api-demos) - an Electron app that teaches you how to use Electron
-- [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps) - small demo apps for the various Electron APIs
+## Resources for Learning V-Engine
+You can learn more about each of these components within the
+- [Quick Start Guide](https://github-url).
+- [vengine.org/docs](https://electronjs.org/docs) - all of V-Engine's documentation
+- [vengine-quick-start](https://github.com/vengine/vengine-quick-start) - a very basic starter 2D game
+
+
+## Contributing to <project_name>
+<!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
+To contribute to <project_name>, follow these steps:
+
+1. Fork this repository.
+2. Create a branch: `git checkout -b <branch_name>`.
+3. Make your changes and commit them: `git commit -m '<commit_message>'`
+4. Push to the original branch: `git push origin <project_name>/<location>`
+5. Create the pull request.
+
+Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+
+## Contributors
+
+Thanks to the following people who have contributed to this project:
+
+* [@ovalves](https://github.com/ovalves) 📖
+
+You might want to consider using something like the [All Contributors](https://github.com/all-contributors/all-contributors) specification and its [emoji key](https://allcontributors.org/docs/en/emoji-key).
+
+## Contact
+
+If you want to contact me you can reach me at <your_email@address.com>.
 
 ## License
+<!--- If you're not sure which open license to use see https://choosealicense.com/--->
 
-[CC0 1.0 (Public Domain)](LICENSE.md)
+This project uses the following license: [<license_name>](<link>).

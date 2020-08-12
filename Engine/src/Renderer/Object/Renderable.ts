@@ -66,7 +66,7 @@ export default class Renderable {
     /**
      * Draw object on the screen
      */
-    public draw(vpMatrix: Array<number>) {
+    public draw(vpMatrix: Array<number>) : void {
         if (!this.shader) {
             return;
         }

@@ -1,7 +1,9 @@
 {
-    "name": "electron-quick-start",
+    "name": "v-engine",
+    "author": "Vinicius Alves",
+    "license": "CC0-1.0",
     "version": "1.0.0",
-    "description": "A minimal Electron application",
+    "description": "A Simple game engine to make awesome 2D games",
     "main": "./dist/src/main.js",
     "scripts": {
         "build": "tsc",
@@ -17,8 +19,6 @@
         "tutorial",
         "demo"
     ],
-    "author": "GitHub",
-    "license": "CC0-1.0",
     "devDependencies": {
         "electron": "^9.1.2",
         "tslint": "^6.1.2",
