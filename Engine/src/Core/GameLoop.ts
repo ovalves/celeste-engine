@@ -50,6 +50,10 @@ export default class GameLoop {
 
     // This function assumes it is sub-classed from MyGame
     private _runLoop() {
+        if (!this.mIsLoopRunning) {
+            return;
+        }
+
         if (this.mIsLoopRunning) {
             // Step A: set up for next call to _runLoop and update input!
             requestAnimationFrame(() => this._runLoop());
@@ -121,10 +125,18 @@ export default class GameLoop {
     };
 
     /**
+     * Stop the game loop
+     */
+    public stop() {
+        this.gameScripts = [];
+        this.mIsLoopRunning = false;
+    };
+
+    /**
      * Start de the game loop
      * @param scripts
      */
-    public _startLoop () {
+    private _startLoop () {
         if (this.mIsLoopRunning) {
             return;
         }

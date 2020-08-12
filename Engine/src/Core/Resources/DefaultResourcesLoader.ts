@@ -2,7 +2,6 @@ import ResourceMap from './ResourceMap';
 import ResourceLoader from './ResourceLoader';
 import TextFileLoader from './TextFileLoader';
 import SimpleShader from '../../Renderer/Shader/SimpleShader';
-import SceneFileParser from '../../Scene/SceneFileParser';
 
 export default class DefaultResourcesLoader {
     private _webGL: WebGLRenderingContext;
@@ -11,7 +10,6 @@ export default class DefaultResourcesLoader {
     private _resourceMap: ResourceMap;
     private resourceLoader: ResourceLoader;
     private textFileLoader: TextFileLoader;
-    private _sceneFileParser: SceneFileParser;
 
     /**
      * Simple Shader
@@ -35,7 +33,6 @@ export default class DefaultResourcesLoader {
 
         this.resourceLoader = new ResourceLoader(this._resourceMap);
         this.textFileLoader = new TextFileLoader(this._resourceMap, this.resourceLoader);
-        this._sceneFileParser = new SceneFileParser(this._webGL, this._resourceMap);
     }
 
     /**
@@ -43,6 +40,27 @@ export default class DefaultResourcesLoader {
      */
     public getShader() : SimpleShader {
         return this._shader;
+    }
+
+    /**
+     * Accessor of the Text File Loader
+     */
+    public getTextFileLoader() : TextFileLoader {
+        return this.textFileLoader;
+    }
+
+    /**
+     * Accessor of the Resource Mapper
+     */
+    public getResourceMap() : ResourceMap {
+        return this._resourceMap;
+    }
+
+    /**
+     * Accessor of the Resource Loader
+     */
+    public getResourceLoader() : ResourceLoader {
+        return this.resourceLoader;
     }
 
     /**
@@ -64,10 +82,7 @@ export default class DefaultResourcesLoader {
     }
 
     /**
-     * @todo melhorar a chamada para a função de callback
-     * @todo ela está sendo chamada para cada carregamento de arquivos
-     *
-     * Loads the shaders resources
+     * Initialize the default engine resources
      * @param callBackFunction
      */
     initialize (callBackFunction: CallableFunction) {
@@ -87,62 +102,5 @@ export default class DefaultResourcesLoader {
          * @todo checar se o carregamento terminou antes de criar os programas de shader
          */
         this._resourceMap.setLoadCompleteCallback(() => this.createShaders(callBackFunction));
-    }
-
-    /**
-     * Loads the scene file by name
-     * @param sceneName
-     * @param gameLoop
-     */
-    loadScene (sceneName: string, gameLoop: any) {
-        if (!sceneName) {
-            sceneName = this.mainSceneFile;
-        }
-
-        this.textFileLoader.loadTextFile(
-            sceneName,
-            this.resourceLoader.MAPPED_FILE_TYPE.XML_FILE,
-            () => this.parseSceneFile(sceneName, gameLoop)
-        );
-    }
-
-    /**
-     * Retorna os scripts presentes na cena
-     */
-    public getLoadedScripts() : Array<number|Object> {
-        return this._sceneFileParser.getLoadedScripts();
-    }
-
-    /**
-     * Retorna as cameras presentes na cena
-     */
-    public getLoadedCameras() : Array<number|Object> {
-        return this._sceneFileParser.getLoadedCameras();
-    }
-
-    /**
-     * Retorna os game objects presentes na cena
-     */
-    public getLoadedGameObjects() : Array<Object> {
-        return this._sceneFileParser.getLoadedGameObjects();
-    }
-
-    /**
-     * Parse the scene file
-     */
-    private parseSceneFile(sceneName: string, gameLoop: any) : void {
-        if (!sceneName) {
-            return;
-        }
-
-        this._sceneFileParser
-            .setDefaultShader(this.getShader())
-            .parse(sceneName);
-
-        gameLoop.loadScripts(
-            this.getLoadedScripts(),
-            this.getLoadedCameras(),
-            this.getLoadedGameObjects()
-        );
     }
 }

@@ -77,6 +77,14 @@ export default class MonoBehaviour {
     }
 
     /**
+    *
+    * @param sceneName
+    */
+    public changeScene(sceneName: string) {
+        this.engine.changeScene(sceneName);
+    }
+
+    /**
      * Accessor of the Camera Viewport object
      */
     public getMainCamera() : Object {

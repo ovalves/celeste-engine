@@ -2,6 +2,7 @@ import GameLoop from './GameLoop';
 import WebGL from './WebGL';
 import VertexBuffer from './VertexBuffer';
 import Camera from '../Scene/Camera';
+import SceneManager from '../Scene/SceneManager';
 import Input from '../Events/Input/Input';
 import DefaultResourcesLoader from './Resources/DefaultResourcesLoader';
 import ResourceMap from './Resources/ResourceMap';
@@ -41,6 +42,11 @@ export default class Engine {
     private _gameLoop: any;
 
     /**
+     * Scene Manager Instance
+     */
+    private _sceneManager: any;
+
+    /**
      * Constructor
      * @param htmlCanvasID Canvas id on HTML Document
      */
@@ -54,6 +60,7 @@ export default class Engine {
             this._vertexBuffer,
             this._resourceMap
         );
+        this._sceneManager = new SceneManager(this._webGL, this._defaultResourcesLoader);
         this._gameLoop = new GameLoop(this);
     }
 
@@ -114,8 +121,8 @@ export default class Engine {
      * Initialize the GameLoop
      * @param scripts
      */
-    startScene(sceneName: string) {
-        this._defaultResourcesLoader.loadScene(
+    public startScene(sceneName: string) {
+        this._sceneManager.loadScene(
             sceneName,
             this._gameLoop
         );
@@ -125,8 +132,9 @@ export default class Engine {
      *
      * @param sceneName
      */
-    changeScene(sceneName: string) {
-        this._defaultResourcesLoader.loadScene(
+    public changeScene(sceneName: string) {
+        this._gameLoop.stop();
+        this._sceneManager.loadScene(
             sceneName,
             this._gameLoop
         );
@@ -136,7 +144,7 @@ export default class Engine {
      * Clear Canvas HTML element
      * @param color
      */
-    clearCanvas(color: Array<number>) {
+    public clearCanvas(color: Array<number>) {
         /**
          * set the color to be cleared
          */

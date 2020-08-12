@@ -41,6 +41,11 @@ class FirstScript {
         const RIGHT = this.monoBehaviour.getInput().getKey(this.monoBehaviour.key().RIGHT);
         const UP = this.monoBehaviour.getInput().getKey(this.monoBehaviour.key().UP);
 
+        /**
+         * mapeando a tecla espaço para trocar de cena
+         */
+        const changeScene = this.monoBehaviour.getInput().getKey(this.monoBehaviour.key().SPACE);
+
         if (this.monoBehaviour.getInput().isKeyPressed(RIGHT)) {
             if (transformGameObject1.position().getXPos() > 30) {
                 transformGameObject1.position().setPosition(10, 60);
@@ -50,6 +55,11 @@ class FirstScript {
 
         if (this.monoBehaviour.getInput().isKeyClicked(UP)) {
             transformGameObject1.rotation().incRotationByDegree(10);
+        }
+
+        if (this.monoBehaviour.getInput().isKeyClicked(changeScene)) {
+            // Carregando uma nova cena
+            this.monoBehaviour.changeScene("../tests/Game/assets/scenes/scene2.xml");
         }
     }
 }
