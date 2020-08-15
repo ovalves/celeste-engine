@@ -1,5 +1,5 @@
 import { vec2, vec3, mat2, mat2d, mat3, mat4, quat, quat2 } from 'gl-matrix';
-import Renderable from '../../src/Renderer/Object/Renderable';
+import Renderable from '../../src/Renderer/Object/Renderables/Renderable';
 import Camera from '../../src/Scene/Camera';
 import Input from '../../src/Events/Input/Input';
 import Keys from '../../src/Events/Input/Keys';
@@ -46,15 +46,18 @@ export default class MonoBehaviour {
     /**
      * Accessor of the SimpleShader context
      */
-    public getShader() {
-        return this.engine.getShader();
+    public getSimpleShader() {
+        return this.engine.getSimpleShader();
     }
 
     /**
      * Accessor of the renderable object
      */
     public getRenderable() : Renderable {
-        return new Renderable(this.engine.getGL());
+        return new Renderable(
+            this.engine.getGL(),
+            this.engine.getResourceMap(),
+        );
     }
 
     /**

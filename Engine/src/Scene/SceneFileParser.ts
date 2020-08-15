@@ -2,7 +2,7 @@ import { vec2 } from 'gl-matrix';
 
 import * as path from 'path'
 import Camera from './Camera';
-import Renderable from '../Renderer/Object/Renderable';
+import Renderable from '../Renderer/Object/Renderables/Renderable';
 
 export default class SceneFileParser {
     /**
@@ -44,6 +44,11 @@ export default class SceneFileParser {
      * Object shader padrão
      */
     private _shader: any;
+
+    /**
+     * Object shader padrão
+     */
+    private _textureShader: any;
 
     /**
      *
@@ -108,6 +113,16 @@ export default class SceneFileParser {
      */
     public setDefaultShader(shader: any) : this {
         this._shader = shader;
+        return this;
+    }
+
+    /**
+     * Seta o shader padrão para a criação dos game objects
+     * @param shader
+     * @returns self
+     */
+    public setTextureShader(shader: any) : this {
+        this._textureShader = shader;
         return this;
     }
 
@@ -208,8 +223,10 @@ export default class SceneFileParser {
             width : number,
             height : number,
             rotation : number,
-            color : Array<number>|Array<string>,
-            square : Renderable;
+            color : Array<number> | Array<string>,
+            square : Renderable,
+            textureAttr : Attr,
+            textureValue : string;
 
         for (let i = 0; i < squares.length; i++) {
             gameObjectName = String(squares.item(i).attributes.getNamedItem("name").value);
@@ -219,8 +236,19 @@ export default class SceneFileParser {
             height = Number(squares.item(i).attributes.getNamedItem("Height").value);
             rotation = Number(squares.item(i).attributes.getNamedItem("Rotation").value);
             color = squares.item(i).attributes.getNamedItem("Color").value.split(",");
+            textureAttr = squares.item(i).attributes.getNamedItem("Texture");
 
-            square = (new Renderable(this._webGL)).createObject(this._shader);
+            if (textureAttr) {
+                textureValue = String(textureAttr.value);
+            }
+
+            let shader = (textureValue) ? this._textureShader : this._shader;
+            square = (new Renderable(this._webGL, this._resourceMap)).createObject(shader);
+
+            if (textureValue) {
+                square.loadTexture(textureValue);
+            }
+
             color = color.map(Number);
             square.setColor(color);
             square.getTransform().position().setPosition(posX, posY);

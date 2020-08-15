@@ -58,7 +58,7 @@ export default class Engine {
      */
     constructor(htmlCanvasID: string) {
         this._webGL        = new WebGL(htmlCanvasID).getWebGL();
-        this._vertexBuffer = new VertexBuffer(this._webGL);
+        this._vertexBuffer = (new VertexBuffer(this._webGL)).initialize();
         this._input        = new Input;
         this._resourceMap = new ResourceMap;
         this._defaultResourcesLoader = new DefaultResourcesLoader(
@@ -102,8 +102,8 @@ export default class Engine {
     /**
      * Accessor of the Shader object
      */
-    public getShader() {
-        return this._defaultResourcesLoader.getShader();
+    public getSimpleShader() {
+        return this._defaultResourcesLoader.getSimpleShader();
     }
 
     /**
@@ -117,7 +117,6 @@ export default class Engine {
      * Init Game Engine
      */
     init() : Engine {
-        this._vertexBuffer.initialize();
         this._input.initialize();
         this._sceneManager.setAudioManager(this._audioManager);
         this._defaultResourcesLoader.initialize(() => this.startScene(null));

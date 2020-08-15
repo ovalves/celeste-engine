@@ -5,42 +5,42 @@ export default class SimpleShader {
     /**
      * WebGL Instance
      */
-    private _webGL: any;
+    protected _webGL: any;
 
     /**
      * Vertex Buffer Instance
      */
-    private _vertexBuffer: any;
+    protected _vertexBuffer: any;
 
     /**
      * Vertex Buffer Instance
      */
-    private _resourceMap: any;
+    protected _resourceMap: any;
 
     /**
      * reference to the compiled shader in webgl context
      */
-    private mCompiledShader: WebGLProgram = [];
+    protected mCompiledShader: WebGLProgram = [];
 
     /**
      * reference to SquareVertexPosition within the shader
      */
-    private mShaderVertexPositionAttribute: number = 0;
+    protected mShaderVertexPositionAttribute: number = 0;
 
     /**
      * reference to the pixelColor uniform in the fragment shader
      */
-    private uPixelColor: WebGLUniformLocation = 0;
+    protected uPixelColor: WebGLUniformLocation = 0;
 
     /**
      * reference to model transform matrix in vertex shader
      */
-    private modelTransform: WebGLUniformLocation = 0;
+    protected modelTransform: WebGLUniformLocation = 0;
 
     /**
      * reference to the View/Projection matrix in the vertex shader
      */
-    private viewProjectionTransform: WebGLUniformLocation = 0;
+    protected viewProjectionTransform: WebGLUniformLocation = 0;
 
     /**
      *
@@ -70,7 +70,7 @@ export default class SimpleShader {
      * @param vertexShader
      * @param fragmentShader
      */
-    private createShaderProgram(vertexShader : any, fragmentShader: any) : void {
+    protected createShaderProgram(vertexShader : any, fragmentShader: any) : void {
         // Step B: Create and link the shaders into a program.
         this.mCompiledShader = <WebGLProgram> this._webGL.createProgram();
         this._webGL.attachShader(this.mCompiledShader, vertexShader);
@@ -82,13 +82,12 @@ export default class SimpleShader {
             console.log("Error linking shader");
         }
 
-        // Step D: Gets a reference to the aSquareVertexPosition attribute within the shaders.
         this.mShaderVertexPositionAttribute = <number> this._webGL.getAttribLocation(
             this.mCompiledShader, "aSquareVertexPosition"
         );
 
         // Step E: Activates the vertex buffer loaded in EngineCore_VertexBuffer.js
-        this._webGL.bindBuffer(this._webGL.ARRAY_BUFFER, this._vertexBuffer.getGLVertexRef());
+        this._webGL.bindBuffer(this._webGL.ARRAY_BUFFER, this._vertexBuffer.getWebGLVertexReference());
 
         // Step F: Describe the characteristic of the vertex position attribute
         this._webGL.vertexAttribPointer(this.mShaderVertexPositionAttribute,
@@ -109,14 +108,14 @@ export default class SimpleShader {
      * loads the modelTransform matrix into webGL to be used by the vertex shader
      * @param modelTransform
      */
-    public loadObjectTransform (modelTransform: any) {
+    public loadObjectTransform(modelTransform: any) {
             this._webGL.uniformMatrix4fv(this.modelTransform, false, modelTransform);
     };
 
     /**
      * Get the WebGLProgram Compiled Shader
      */
-    public getShader() : WebGLProgram {
+    public getSimpleShader() : WebGLProgram {
         return this.mCompiledShader;
     };
 
@@ -125,9 +124,11 @@ export default class SimpleShader {
      * @param pixelColor
      */
     public activateShader(pixelColor: Array<number>, vpMatrix: Array<number>) {
+        // Step D: Gets a reference to the aSquareVertexPosition attribute within the shaders.
+
         this._webGL.useProgram(this.mCompiledShader);
         this._webGL.uniformMatrix4fv(this.viewProjectionTransform, false, vpMatrix);
-        this._webGL.bindBuffer(this._webGL.ARRAY_BUFFER, this._vertexBuffer.getGLVertexRef());
+        this._webGL.bindBuffer(this._webGL.ARRAY_BUFFER, this._vertexBuffer.getWebGLVertexReference());
         this._webGL.vertexAttribPointer(this.mShaderVertexPositionAttribute,
             3,                 // each element is a 3-float (x,y.z)
             this._webGL.FLOAT, // data type is FLOAT
@@ -143,7 +144,7 @@ export default class SimpleShader {
      * @param filePath
      * @param shaderType
      */
-    private compileShader(filePath: string, shaderType: number) : WebGLShader{
+    protected compileShader(filePath: string, shaderType: number) : WebGLShader {
         let shaderSource: any, compiledShader: any, xmlReq;
 
         // Step A: Access the shader textfile

@@ -1,10 +1,18 @@
-import Transform from './Transform';
+import Transform from '../Transform';
+import SimpleShader from '../../Shader/SimpleShader';
+import ResourceMap from '../../../Core/Resources/ResourceMap';
+import TextureProcessor from '../../../Core/Resources/Texture/TextureProcessor';
 
 export default class Renderable {
     /**
      * WebGL Instance
      */
     private webGL: WebGLRenderingContext;
+
+    /**
+     * ResourceMap Instance
+     */
+    private resourceMap: ResourceMap;
 
     /**
      * Game Object Transform Instance
@@ -21,13 +29,22 @@ export default class Renderable {
      */
     private color: Array<number> = [];
 
+    private texture : string;
+
+    private textureProcessor : TextureProcessor;
+
     /**
      * Constructor
      * @param webGL WebGLRenderingContext
      */
-    constructor(webGL: WebGLRenderingContext) {
+    constructor(webGL: WebGLRenderingContext, resourceMap: ResourceMap) {
         this.webGL  = <WebGLRenderingContext> webGL;
+        this.resourceMap = resourceMap;
         this.gameObjectTransform = new Transform();
+        this.textureProcessor = new TextureProcessor(
+            this.webGL,
+            this.resourceMap
+        );
     }
 
     /**
@@ -50,9 +67,23 @@ export default class Renderable {
      * Creating an game object
      * @param shader
      */
-    public createObject(shader : any) : Renderable {
+    public createObject(shader : SimpleShader) : Renderable {
         this.shader = shader;
         return this;
+    }
+
+    /**
+     *
+     * @param texture
+     */
+    public loadTexture(texture : string) : this {
+        this.texture = texture;
+        this.textureProcessor.loadTexture(this.texture);
+        return this;
+    }
+
+    public getTexture () {
+        return this.texture;
     }
 
     /**
@@ -69,6 +100,14 @@ export default class Renderable {
     public draw(vpMatrix: Array<number>) : void {
         if (!this.shader) {
             return;
+        }
+
+        /**
+         * Active the texture on game object
+         */
+        if (this.texture) {
+            this.setColor([1, 1, 1, 0]);
+            this.textureProcessor.activateTexture(this.texture);
         }
 
         this.shader.activateShader(this.color, vpMatrix); // always activate the shader first!

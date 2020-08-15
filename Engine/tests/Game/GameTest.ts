@@ -51,7 +51,7 @@ export default class GameTest {
          *      - Passos executados pela game engine ao adicionar novos shaders
          *          - A game engine irá criar, carregar e compilar os programas dos shaders internamente
          */
-        this.shader = this.engine.getShader();
+        this.shader = this.engine.getSimpleShader();
         this.shader.addShader(
             "../src/Renderer/Shader/GLSLShaders/SimpleVS.glsl", // Path to the VertexShader
             "../src/Renderer/Shader/GLSLShaders/SimpleFS.glsl"   // Path to the FragmentShader

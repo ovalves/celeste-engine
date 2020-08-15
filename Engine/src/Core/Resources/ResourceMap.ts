@@ -57,7 +57,7 @@ export default class ResourceMap {
      * @param rName
      * @param loadedAsset
      */
-    public asyncLoadCompleted(rName: string, loadedAsset: string) {
+    public asyncLoadCompleted(rName: string, loadedAsset: any) {
         if (!this.isAssetLoaded(rName)) {
             alert("gEngine.asyncLoadCompleted: [" + rName + "] not in map!");
         }

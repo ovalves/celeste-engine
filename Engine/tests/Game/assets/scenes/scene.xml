@@ -18,7 +18,7 @@
 
 
      <!-- Squares Rotation is in degree -->
-    <Square name="obj1" PosX="20" PosY="60" Width="5" Height="5" Rotation="30" Color="1, 1, 1, 1" />
-    <Square name="obj2" PosX="20" PosY="60" Width="2" Height="2" Rotation="0"  Color="1, 0, 0, 1" />
+    <Square Texture="../tests/Game/assets/textures/minion_portal.jpg" name="obj1" PosX="20" PosY="60" Width="5" Height="5" Rotation="30" Color="1, 1, 1, 1" />
+    <Square Texture="../tests/Game/assets/textures/minion_collector.jpg" name="obj2" PosX="20" PosY="60" Width="2" Height="2" Rotation="0"  Color="1, 0, 0, 1" />
 
 </MyGameLevel>
