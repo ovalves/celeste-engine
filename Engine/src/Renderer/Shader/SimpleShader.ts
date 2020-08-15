@@ -122,6 +122,7 @@ export default class SimpleShader {
     /**
      * Active the shader program
      * @param pixelColor
+     * @param vpMatrix
      */
     public activateShader(pixelColor: Array<number>, vpMatrix: Array<number>) {
         // Step D: Gets a reference to the aSquareVertexPosition attribute within the shaders.
