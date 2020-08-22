@@ -3,12 +3,14 @@ import ResourceLoader from './ResourceLoader';
 import TextFileLoader from './TextFileLoader';
 import SimpleShader from '../../Renderer/Shader/SimpleShader';
 import TextureShader from '../../Renderer/Shader/TextureShader';
+import SpriteShader from '../../Renderer/Shader/SpriteShader';
 
 export default class DefaultResourcesLoader {
     private _webGL: WebGLRenderingContext;
     private _vertexBuffer: any;
     private _simpleShader: SimpleShader;
     private _textureShader : TextureShader;
+    private _spriteShader : SpriteShader;
     private _resourceMap: ResourceMap;
     private resourceLoader: ResourceLoader;
     private textFileLoader: TextFileLoader;
@@ -58,6 +60,13 @@ export default class DefaultResourcesLoader {
     }
 
     /**
+     * Accessor of the TextureShader context
+     */
+    public getSpriteShader() : SpriteShader {
+        return this._spriteShader;
+    }
+
+    /**
      * Accessor of the Text File Loader
      */
     public getTextFileLoader() : TextFileLoader {
@@ -98,11 +107,18 @@ export default class DefaultResourcesLoader {
             this._resourceMap
         );
 
+        this._spriteShader = new SpriteShader(
+            this._webGL,
+            this._vertexBuffer,
+            this._resourceMap
+        );
+
         /**
          * create the shader program
          */
         this._simpleShader.initialize(this.kSimpleVS, this.kSimpleFS);
         this._textureShader.initialize(this.kTextureVS, this.kTextureFS);
+        this._spriteShader.initialize(this.kTextureVS, this.kTextureFS);
         callBackFunction();
     }
 

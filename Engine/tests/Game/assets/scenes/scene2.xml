@@ -1,11 +1,6 @@
-<MyGameLevel>
+<Scene>
     <script src="../tests/Game/assets/scripts/script3.js" />
     <script src="../tests/Game/assets/scripts/script4.js" />
-
-<!--  *** be careful!! comma (,) is not a supported syntax!!  -->
-<!--  make sure there are no comma in between attributes -->
-<!--  e.g., do NOT do:  PosX="20", PosY="30" -->
-<!--  notice the "comma" between PosX and PosY: Syntax error! -->
 
     <!-- cameras -->
     <!-- Viewport: x, y, w, h -->
@@ -17,4 +12,4 @@
     <!-- Squares Rotation is in degree -->
     <Square name="obj3" PosX="20" PosY="60" Width="5" Height="5" Rotation="30" Color="0.3, 0.55, 0.75, 1" />
     <Square name="obj4" PosX="20" PosY="60" Width="3" Height="2" Rotation="0"  Color="1, 0.49, 0.33, 1" />
-</MyGameLevel>
+</Scene>

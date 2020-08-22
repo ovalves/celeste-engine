@@ -95,6 +95,7 @@ export default class SceneManager {
         this._sceneFileParser
             .setDefaultShader(this.resourcesLoader.getSimpleShader())
             .setTextureShader(this.resourcesLoader.getTextureShader())
+            .setSpriteShader(this.resourcesLoader.getSpriteShader())
             .setAudioManager(this.audioManager)
             .parse(sceneName);
 

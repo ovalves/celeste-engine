@@ -51,6 +51,11 @@ export default class SceneFileParser {
     private _textureShader: any;
 
     /**
+     * Object shader padrão
+     */
+    private _spriteShader: any;
+
+    /**
      *
      */
     private audioManager: any;
@@ -123,6 +128,16 @@ export default class SceneFileParser {
      */
     public setTextureShader(shader: any) : this {
         this._textureShader = shader;
+        return this;
+    }
+
+    /**
+     * Seta o shader padrão para a criação dos game objects
+     * @param shader
+     * @returns self
+     */
+    public setSpriteShader(shader: any) : this {
+        this._spriteShader = shader;
         return this;
     }
 
@@ -226,7 +241,9 @@ export default class SceneFileParser {
             color : Array<number> | Array<string>,
             square : Renderable,
             textureAttr : Attr,
-            textureValue : string;
+            textureValue : string,
+            spriteAttr : Attr,
+            spriteValue : string;
 
         for (let i = 0; i < squares.length; i++) {
             gameObjectName = String(squares.item(i).attributes.getNamedItem("name").value);
@@ -238,15 +255,30 @@ export default class SceneFileParser {
             color = squares.item(i).attributes.getNamedItem("Color").value.split(",");
             textureAttr = squares.item(i).attributes.getNamedItem("Texture");
 
+            spriteAttr = squares.item(i).attributes.getNamedItem("Sprite");
+
             if (textureAttr) {
                 textureValue = String(textureAttr.value);
             }
 
-            let shader = (textureValue) ? this._textureShader : this._shader;
+            if (spriteAttr) {
+                spriteValue = String(spriteAttr.value);
+            }
+
+            let shader = (textureValue)
+                ? this._textureShader
+                : (spriteValue)
+                    ? this._spriteShader
+                    : this._shader;
+
             square = (new Renderable(this._webGL, this._resourceMap)).createObject(shader);
 
             if (textureValue) {
                 square.loadTexture(textureValue);
+            }
+
+            if (spriteValue) {
+                square.loadTexture(spriteValue, [0, 120, 0, 180]);
             }
 
             color = color.map(Number);

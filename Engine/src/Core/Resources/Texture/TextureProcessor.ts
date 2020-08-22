@@ -27,7 +27,7 @@ export default class TextureProcessor {
      * This converts an image to the webGL texture format.
      * This should only be called once the texture is loaded.
      */
-    private _processLoadedImage(textureName : string, image : HTMLImageElement) {
+    private _processLoadedImage(textureName : string, image : HTMLImageElement, callback: CallableFunction) {
         // Generate a texture reference to the webGL context
         let textureID = <WebGLTexture> this.webGL.createTexture();
 
@@ -52,11 +52,12 @@ export default class TextureProcessor {
 
         let texture = new Texture(textureName, image.naturalWidth, image.naturalHeight, textureID);
         this.resourceMap.asyncLoadCompleted(textureName, texture);
+        callback();
     }
 
     // Loads an texture so that it can be drawn.
     // If already in the map, will do nothing.
-    public loadTexture(textureName : string) {
+    public loadTexture(textureName : string, callback: CallableFunction) {
         if (!(this.resourceMap.isAssetLoaded(textureName))) {
             // Create new Texture object.
             var img = new Image();
@@ -68,7 +69,7 @@ export default class TextureProcessor {
             // it back into the mTextureMap.
             let that = this;
             img.onload = function () {
-                that._processLoadedImage(textureName, img);
+                that._processLoadedImage(textureName, img, callback);
             };
             img.src = textureName;
         } else {
@@ -107,8 +108,7 @@ export default class TextureProcessor {
         this.webGL.bindTexture(this.webGL.TEXTURE_2D, null);
     };
 
-    public getTextureInfo(textureName : string) {
+    public getTextureInfo(textureName : string) : any{
         return this.resourceMap.retrieveAsset(textureName);
     }
-
 }

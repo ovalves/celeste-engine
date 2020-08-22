@@ -1,24 +1,18 @@
-<MyGameLevel>
+<Scene>
     <script src="../tests/Game/assets/scripts/script1.js" />
     <script src="../tests/Game/assets/scripts/script2.js" />
-
-<!--  *** be careful!! comma (,) is not a supported syntax!!  -->
-<!--  make sure there are no comma in between attributes -->
-<!--  e.g., do NOT do:  PosX="20", PosY="30" -->
-<!--  notice the "comma" between PosX and PosY: Syntax error! -->
 
     <!-- cameras -->
     <!-- Viewport: x, y, w, h -->
     <Camera CenterX="20" CenterY="60" Width="20" Viewport="20, 40, 600, 300" BgColor="0.5, 1, 0.2, 1"/>
     <Camera CenterX="20" CenterY="60" Width="20" Viewport="20, 40, 600, 300" BgColor="0.8, 0.8, 0.8, 1.0"/>
 
-
     <Audio src="../tests/Game/assets/sounds/BGClip.mp3" />
     <Audio src="../tests/Game/assets/sounds/MyGame_cue.wav" />
 
-
-     <!-- Squares Rotation is in degree -->
+    <!-- Squares Rotation is in degree -->
+    <Square Sprite="../tests/Game/assets/spritesheet/minion_sprite.png" name="sprite1" PosX="20" PosY="60" Width="2" Height="3" Rotation="30" Color="1, 1, 1, 0" />
     <Square Texture="../tests/Game/assets/textures/minion_portal.jpg" name="obj1" PosX="20" PosY="60" Width="5" Height="5" Rotation="30" Color="1, 1, 1, 1" />
     <Square Texture="../tests/Game/assets/textures/minion_collector.jpg" name="obj2" PosX="20" PosY="60" Width="2" Height="2" Rotation="0"  Color="1, 0, 0, 1" />
 
-</MyGameLevel>
+</Scene>
