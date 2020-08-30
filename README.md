@@ -17,22 +17,22 @@ Before you begin, ensure you have met the following requirements:
 <!--- These are just example requirements. Add, duplicate or remove as required --->
 * To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
-## Installing <project_name>
+## Installing v-engine
 
-To install <project_name>, follow these steps:
+To install v-engine, follow these steps:
 
 ```bash
 # Clone this repository
-git clone https://github.com/vengine/vengine-quick-start
+git clone https://github.com/ovalves/v-engine.git
 # Go into the repository
-cd vengine-quick-start
+cd v-engine
 # Install dependencies
 npm install
 # Run the app
 npm run start
 ```
 
-## Using <project_name>
+## Using v-engine
 
 A basic game made with the V-Engine needs just these files:
 
@@ -150,7 +150,7 @@ You can learn more about each of these components within the
 - [vengine-quick-start](https://github.com/vengine/vengine-quick-start) - a very basic starter 2D game
 
 
-## Contributing to <project_name>
+## Contributing to v-engine
 <!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
 To contribute to <project_name>, follow these steps:
 
@@ -172,9 +172,9 @@ You might want to consider using something like the [All Contributors](https://g
 
 ## Contact
 
-If you want to contact me you can reach me at <your_email@address.com>.
+If you want to contact me you can reach me at <vinicius_o.a@live.com>.
 
 ## License
 <!--- If you're not sure which open license to use see https://choosealicense.com/--->
 
-This project uses the following license: [<license_name>](<link>).
+This project uses the following license: MIT (https://github.com/ovalves/v-engine/blob/master/LICENSE.md).
