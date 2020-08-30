@@ -177,4 +177,4 @@ If you want to contact me you can reach me at <vinicius_o.a@live.com>.
 ## License
 <!--- If you're not sure which open license to use see https://choosealicense.com/--->
 
-This project uses the following license: MIT (https://github.com/ovalves/v-engine/blob/master/LICENSE.md).
+This project uses the following license: MIT (https://github.com/ovalves/v-engine/blob/master/LICENSE).
