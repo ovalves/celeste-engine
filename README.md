@@ -1,15 +1,19 @@
-# V-Engine
-
-<!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and licence info here --->
-![GitHub repo size](https://img.shields.io/github/repo-size/ovalves/selene)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/ovalves/v-engine/blob/master/LICENSE)
+[![Read the Docs](https://readthedocs.org/projects/selene-framework/badge/?version=latest)](https://selene-framework.readthedocs.io/en/latest/?badge=latest)
+[![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)  
 ![GitHub contributors](https://img.shields.io/github/contributors/ovalves/selene)
-![GitHub stars](https://img.shields.io/github/stars/ovalves/selene?style=social)
-![GitHub forks](https://img.shields.io/github/forks/ovalves/selene?style=social)
-![Twitter Follow](https://img.shields.io/twitter/follow/v1ndite?style=social)
 
-Project name is a `<utility/tool/feature>` that allows `<insert_target_audience>` to do `<action/task_it_does>`.
+## About V-Engine
+V-Engine is a simple game engine that allows you to write legible and realiable code for high quality 2D games. 
+We believe development must be an enjoyable and creative experience to be truly fulfilling.
 
-This is a minimal Game Engine based on the [Build your own 2d game engine](https://github.com/apress/build-your-own-2d-game-engine) using the Electron.
+- [Simple, fast game engine](###).
+- [User input manager](###).
+- [Multiple scenes on project](###).
+- [Audio manager](###).
+- [Filesystem manager](###).
+
+This is a minimal Game Engine based on the [Build your own 2d game engine](https://github.com/apress/build-your-own-2d-game-engine).
 
 ## Prerequisites
 
