@@ -1,7 +1,6 @@
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/ovalves/v-engine/blob/master/LICENSE)
 [![Read the Docs](https://readthedocs.org/projects/selene-framework/badge/?version=latest)](https://selene-framework.readthedocs.io/en/latest/?badge=latest)
-[![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)  
-![GitHub contributors](https://img.shields.io/github/contributors/ovalves/selene)
+[![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 
 ## About V-Engine
 V-Engine is a simple game engine that allows you to write legible and realiable code for high quality 2D games. 
