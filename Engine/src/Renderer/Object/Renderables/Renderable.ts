@@ -8,50 +8,50 @@ export default class Renderable {
     /**
      * WebGL Instance
      */
-    private webGL: WebGLRenderingContext;
+    protected webGL: WebGLRenderingContext;
 
     /**
      * ResourceMap Instance
      */
-    private resourceMap: ResourceMap;
+    protected resourceMap: ResourceMap;
 
     /**
      * Game Object Transform Instance
      */
-    private gameObjectTransform: Transform;
+    protected gameObjectTransform: Transform;
 
     /**
      * Shader Instance
      */
-    private shader: any;
+    protected shader: any;
 
     /**
      * Color of renderable object
      */
-    private color: Array<number> = [];
+    protected color: Array<number> = [];
 
     /**
      * Loads the texture image
      */
-    private texture : string;
+    protected texture : string;
 
     /**
      * Set game object as sprite
      */
-    private isSprite : boolean;
+    protected isSprite : boolean;
 
     /**
      * Texture Coordinates
      */
-    private mTexLeft: any = 0.0;   // bounds of texture coordinate (0 is left, 1 is right)
-    private mTexRight: any = 1.0;  //
-    private mTexTop: any = 1.0;    //   1 is top and 0 is bottom of image
-    private mTexBottom: any = 0.0; //
+    protected mTexLeft: any = 0.0;   // bounds of texture coordinate (0 is left, 1 is right)
+    protected mTexRight: any = 1.0;  //
+    protected mTexTop: any = 1.0;    //   1 is top and 0 is bottom of image
+    protected mTexBottom: any = 0.0; //
 
     /**
      * Texture Coordinates Array
      */
-    private eTexCoordArrayA : any = Object.freeze({
+    protected eTexCoordArrayA : any = Object.freeze({
         eLeft: 2,
         eRight: 0,
         eTop: 1,
@@ -61,7 +61,7 @@ export default class Renderable {
     /**
      * Texture Processor
      */
-    private textureProcessor : TextureProcessor;
+    protected textureProcessor : TextureProcessor;
 
     /**
      * Constructor
@@ -177,26 +177,29 @@ export default class Renderable {
      * @param top
      */
     public setElementPixelPositions (left: any, right: any, bottom: any, top: any) {
+        let sizes = this.getLoadedTextureSizes();
+        this.mTexLeft = left / sizes[0];
+        this.mTexRight = right / sizes[0];
+        this.mTexBottom = bottom / sizes[1];
+        this.mTexTop = top / sizes[1];
+    };
+
+    /**
+     *
+     */
+    protected getLoadedTextureSizes() : Array<number> {
         let texture: Texture = <Texture> this.textureProcessor.getTextureInfo(this.texture);
 
         if (typeof(texture) != 'object') {
-            return;
-        }
-
-        if (texture.getName()) {
-            console.log(texture.getWidth());
-            console.log(texture.getheight());
+            return [1, 1];
         }
 
         // entire image width, height
-        var imageW = texture.getWidth();
-        var imageH = texture.getheight();
-
-        this.mTexLeft = left / imageW;
-        this.mTexRight = right / imageW;
-        this.mTexBottom = bottom / imageH;
-        this.mTexTop = top / imageH;
-    };
+        return [
+            texture.getWidth(),
+            texture.getHeight()
+        ];
+    }
 
     /**
      * Draw object on the screen

@@ -3,6 +3,7 @@ import { vec2 } from 'gl-matrix';
 import * as path from 'path'
 import Camera from './Camera';
 import Renderable from '../Renderer/Object/Renderables/Renderable';
+import SpriteAnimateRenderable from '../Renderer/Object/Renderables/SpriteAnimateRenderable';
 
 export default class SceneFileParser {
     /**
@@ -239,11 +240,13 @@ export default class SceneFileParser {
             height : number,
             rotation : number,
             color : Array<number> | Array<string>,
-            square : Renderable,
+            square : any,
             textureAttr : Attr,
             textureValue : string,
             spriteAttr : Attr,
-            spriteValue : string;
+            spriteValue : string,
+            animateAttr : Attr,
+            animateValue : string;
 
         for (let i = 0; i < squares.length; i++) {
             gameObjectName = String(squares.item(i).attributes.getNamedItem("name").value);
@@ -254,8 +257,8 @@ export default class SceneFileParser {
             rotation = Number(squares.item(i).attributes.getNamedItem("Rotation").value);
             color = squares.item(i).attributes.getNamedItem("Color").value.split(",");
             textureAttr = squares.item(i).attributes.getNamedItem("Texture");
-
             spriteAttr = squares.item(i).attributes.getNamedItem("Sprite");
+            animateAttr = squares.item(i).attributes.getNamedItem("Animate");
 
             if (textureAttr) {
                 textureValue = String(textureAttr.value);
@@ -265,19 +268,33 @@ export default class SceneFileParser {
                 spriteValue = String(spriteAttr.value);
             }
 
+            if (animateAttr) {
+                animateValue = String(animateAttr.value);
+            }
+
             let shader = (textureValue)
                 ? this._textureShader
                 : (spriteValue)
                     ? this._spriteShader
                     : this._shader;
 
-            square = (new Renderable(this._webGL, this._resourceMap)).createObject(shader);
+            if (spriteValue && animateValue) {
+                square = (new SpriteAnimateRenderable(this._webGL, this._resourceMap)).createObject(shader);
+                square.setAnimationType(0);
+                square.setAnimationSpeed(50);
+            } else {
+                square = (new Renderable(this._webGL, this._resourceMap)).createObject(shader);
+            }
 
             if (textureValue) {
                 square.loadTexture(textureValue);
             }
 
-            if (spriteValue) {
+            if (spriteValue && animateValue) {
+                // array de posições de animação da sprite
+                square.loadTexture(spriteValue, [348, 0, 204, 164, 5, 0]);
+            } else if (spriteValue) {
+                // array de posições de exibição da sprite
                 square.loadTexture(spriteValue, [0, 120, 0, 180]);
             }
 

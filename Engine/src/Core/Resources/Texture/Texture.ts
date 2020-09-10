@@ -19,7 +19,7 @@ export default class Texture {
         return this.width;
     }
 
-    public getheight() {
+    public getHeight() {
         return this.height;
     }
 

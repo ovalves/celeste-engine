@@ -1,6 +1,6 @@
 <Scene>
     <script src="../tests/Game/assets/scripts/script1.js" />
-    <script src="../tests/Game/assets/scripts/script2.js" />
+    <!-- <script src="../tests/Game/assets/scripts/script2.js" /> -->
 
     <!-- cameras -->
     <!-- Viewport: x, y, w, h -->
@@ -11,8 +11,19 @@
     <Audio src="../tests/Game/assets/sounds/MyGame_cue.wav" />
 
     <!-- Squares Rotation is in degree -->
-    <Square Sprite="../tests/Game/assets/spritesheet/minion_sprite.png" name="sprite1" PosX="20" PosY="60" Width="2" Height="3" Rotation="30" Color="1, 1, 1, 0" />
-    <Square Texture="../tests/Game/assets/textures/minion_portal.jpg" name="obj1" PosX="20" PosY="60" Width="5" Height="5" Rotation="30" Color="1, 1, 1, 1" />
-    <Square Texture="../tests/Game/assets/textures/minion_collector.jpg" name="obj2" PosX="20" PosY="60" Width="2" Height="2" Rotation="0"  Color="1, 0, 0, 1" />
+    <Square
+        Sprite="../tests/Game/assets/spritesheet/minion_sprite.png"
+        Animate="True"
+        name="sprite1"
+        PosX="15"
+        PosY="56.5"
+        Width="4"
+        Height="3.2"
+        Rotation="30"
+        Color="1, 1, 1, 0"
+    />
+
+    <!-- <Square Texture="../tests/Game/assets/textures/minion_portal.jpg" name="obj1" PosX="20" PosY="60" Width="5" Height="5" Rotation="30" Color="1, 1, 1, 1" />
+    <Square Texture="../tests/Game/assets/textures/minion_collector.jpg" name="obj2" PosX="20" PosY="60" Width="2" Height="2" Rotation="0"  Color="1, 0, 0, 1" /> -->
 
 </Scene>
