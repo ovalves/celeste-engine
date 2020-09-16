@@ -4,6 +4,10 @@
 ## About Celeste Engine
 Celeste Engine is a simple game engine that allows you to write legible and realiable code for high quality 2D games.
 
+```
+Project status: Working In Progress
+```
+
 - Simple game engine
 - User input management system
 - Multiple scenes management system
