@@ -1,14 +1,14 @@
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/ovalves/v-engine/blob/master/LICENSE)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/ovalves/celeste-engine/blob/master/LICENSE)
 [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 
-## About V-Engine
-V-Engine is a simple game engine that allows you to write legible and realiable code for high quality 2D games.
+## About Celeste Engine
+Celeste Engine is a simple game engine that allows you to write legible and realiable code for high quality 2D games.
 
 - Simple game engine
 - User input management system
 - Multiple scenes management system
 - Audio source management system
-- [ilesystem management system
+- Filesystem management system
 - GLSL Shaders management system
 
 This is a minimal Game Engine based on the [Build your own 2d game engine](https://github.com/apress/build-your-own-2d-game-engine).
@@ -18,24 +18,24 @@ This is a minimal Game Engine based on the [Build your own 2d game engine](https
 Before you begin, ensure you have met the following requirements:
 * To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
-## Installing v-engine
+## Installing Celeste Engine
 
-To install v-engine, follow these steps:
+To install Celeste Engine, follow these steps:
 
 ```bash
 # Clone this repository
-git clone https://github.com/ovalves/v-engine.git
+git clone https://github.com/ovalves/celeste-engine.git
 # Go into the repository
-cd v-engine
+cd celeste-engine
 # Install dependencies
 npm install
 # Run the app
 npm run start
 ```
 
-## Using v-engine
+## Using Celeste Engine
 
-A basic game made with the V-Engine needs just these files:
+A basic game made with the Celeste Engine needs just these files:
 
 - `assets/fonts` - The game text fonts.
 - `assets/scenes` - The game scenes
@@ -46,14 +46,14 @@ A basic game made with the V-Engine needs just these files:
 
 ## How to Use
 ### Simple Game engine script class
-- `constructor(MonoBehaviour)`
-- `start()`
-- `draw()`
-- `update()`
+- `constructor(MonoBehaviour)` - Setup all assets of the game
+- `start()` - Called in the creation of the game object
+- `draw()` - Called once per frame, use this method to draw objects in the scene
+- `update()` - Called once per frame, use this method to interact with user inputs
 ```js
 class FirstScript {
     /**
-     * Recebe por padrão uma classe com todos métodos da engine
+     * Setup all assets of the game
      *
      * @param MonoBehaviour
      */
@@ -65,14 +65,14 @@ class FirstScript {
     }
 
     /**
-     * Executado sempre que o game object linkado a este script é instanciado na cena
+     * Called in the creation of the game object
      */
     start() {
         this.gameObject1 = this.monoBehaviour.getGameObject('OBJECT_NAME');
     }
 
     /**
-     * Executado pelo gameloop a frame a frame
+     * Called once per frame
      */
     draw() {
         // Pssando a camera principal da cena para desenhar o objeto
@@ -80,7 +80,7 @@ class FirstScript {
     }
 
     /**
-     * Executado pelo gameloop a frame a frame
+     * Called once per frame
      */
     update() {
         // Game Logic
@@ -88,7 +88,9 @@ class FirstScript {
 }
 ```
 
-# MonoBehaviour Methods
+## All scripts inherit from MonoBehaviour
+### MonoBehaviour has several methods, such as:
+```
 - getRenderable() : Renderable
     * setColor(color: Array<number>) : Renderable
     * getColor() : Array<number>
@@ -122,61 +124,91 @@ class FirstScript {
             * getHeight()
             * setHeight(height: number)
             * incHeightBy(delta: number)
+```
+
+```
 * getSimpleShader()
+```
+
+```
 * getTextureShader()
+```
+
+```
 * getGameObject(objectName: string)
+```
+
+```
 * changeScene(sceneName: string)
+```
+
+```
 * getAudio()
+```
+
+```
 * playBackgroundAudio(audioName: string)
+```
+
+```
 * playAudioTrack(audioName: string)
+```
+
+```
 * getMainCamera()
+```
+
+```
 * getCameras()
+```
+
+```
 * getInput()
     * isKeyPressed(keyCode: any)
     * isKeyClicked(keyCode: any)
     * getKey(searchedKey: string)
+```
+
+```    
 * key()
+```
+
+```
 * getVector2()
+```
+
+```
 * getVector3()
+```
+
+```
 * getMatrix2()
+```
+
+```
 * getMatrix2D()
+```
+
+```
 * getMatrix3()
+```
+
+```
 * getMatrix4()
+```
+
+```
 * getQuaternion()
+```
+
+```
 * getQuaternion2()
-
-## Resources for Learning V-Engine
-You can learn more about each of these components within the
-- [Quick Start Guide](https://github-url).
-- [vengine.org/docs](https://electronjs.org/docs) - all of V-Engine's documentation
-- [vengine-quick-start](https://github.com/vengine/vengine-quick-start) - a very basic starter 2D game
-
-
-## Contributing to v-engine
-<!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
-To contribute to <project_name>, follow these steps:
-
-1. Fork this repository.
-2. Create a branch: `git checkout -b <branch_name>`.
-3. Make your changes and commit them: `git commit -m '<commit_message>'`
-4. Push to the original branch: `git push origin <project_name>/<location>`
-5. Create the pull request.
-
-Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
-
-## Contributors
-
-Thanks to the following people who have contributed to this project:
-
-* [@ovalves](https://github.com/ovalves) 📖
-
-You might want to consider using something like the [All Contributors](https://github.com/all-contributors/all-contributors) specification and its [emoji key](https://allcontributors.org/docs/en/emoji-key).
+```
 
 ## Contact
 
-If you want to contact me you can reach me at <vinicius_o.a@live.com>.
+If you want to contact me you can reach me at <oalvesvinicius@gmail.com>.
 
 ## License
-<!--- If you're not sure which open license to use see https://choosealicense.com/--->
 
-This project uses the following license: MIT (https://github.com/ovalves/v-engine/blob/master/LICENSE).
+This project uses the following license: MIT (https://github.com/ovalves/celeste-engine/blob/master/LICENSE).
