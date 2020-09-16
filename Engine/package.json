@@ -1,9 +1,9 @@
 {
-    "name": "v-engine",
+    "name": "celeste-engine",
     "author": "Vinicius Alves",
-    "license": "CC0-1.0",
+    "license": "MIT",
     "version": "1.0.0",
-    "description": "A Simple game engine to make awesome 2D games",
+    "description": "A Simple game engine to make simple 2D games",
     "main": "./dist/src/main.js",
     "scripts": {
         "build": "tsc",
