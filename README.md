@@ -1,23 +1,21 @@
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/ovalves/v-engine/blob/master/LICENSE)
-[![Read the Docs](https://readthedocs.org/projects/selene-framework/badge/?version=latest)](https://selene-framework.readthedocs.io/en/latest/?badge=latest)
 [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 
 ## About V-Engine
-V-Engine is a simple game engine that allows you to write legible and realiable code for high quality 2D games. 
-We believe development must be an enjoyable and creative experience to be truly fulfilling.
+V-Engine is a simple game engine that allows you to write legible and realiable code for high quality 2D games.
 
-- [Simple, fast game engine](###).
-- [User input manager](###).
-- [Multiple scenes on project](###).
-- [Audio manager](###).
-- [Filesystem manager](###).
+- Simple game engine
+- User input management system
+- Multiple scenes management system
+- Audio source management system
+- [ilesystem management system
+- GLSL Shaders management system
 
 This is a minimal Game Engine based on the [Build your own 2d game engine](https://github.com/apress/build-your-own-2d-game-engine).
 
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
-<!--- These are just example requirements. Add, duplicate or remove as required --->
 * To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
 ## Installing v-engine
@@ -39,11 +37,12 @@ npm run start
 
 A basic game made with the V-Engine needs just these files:
 
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.js` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
-- `index.html` - A web page to render. This is the app's **renderer process**.
-
-To use <project_name>, follow these steps:
+- `assets/fonts` - The game text fonts.
+- `assets/scenes` - The game scenes
+- `assets/scripts` - The game object scripts
+- `assets/sounds` - The game source sounds
+- `assets/spritesheet` - The game spritesheet images
+- `assets/textures` - The game object textures
 
 ## How to Use
 ### Simple Game engine script class
