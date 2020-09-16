@@ -1,13 +1,12 @@
+```
+Project status: Working In Progress
+```
+
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/ovalves/celeste-engine/blob/master/LICENSE)
 [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 
 ## About Celeste Engine
 Celeste Engine is a simple game engine that allows you to write legible and realiable code for high quality 2D games.
-
-```
-Project status: Working In Progress
-```
-
 - Simple game engine
 - User input management system
 - Multiple scenes management system
