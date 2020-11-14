@@ -210,4 +210,4 @@ class FirstScript {
 
 ## License
 
-This project uses the following license: MIT (https://github.com/ovalves/celeste-engine/blob/master/LICENSE).
+The Celeste Engine is licensed under the MIT license. See [License File](LICENSE) for more information.
