@@ -20,7 +20,7 @@
         "demo"
     ],
     "devDependencies": {
-        "electron": "^9.1.2",
+        "electron": "^9.3.1",
         "tslint": "^6.1.2",
         "typescript": "^3.9.5"
     },
