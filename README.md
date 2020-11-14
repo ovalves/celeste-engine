@@ -208,10 +208,6 @@ class FirstScript {
 * getQuaternion2()
 ```
 
-## Contact
-
-If you want to contact me you can reach me at <oalvesvinicius@gmail.com>.
-
 ## License
 
 This project uses the following license: MIT (https://github.com/ovalves/celeste-engine/blob/master/LICENSE).
